@@ -4,8 +4,8 @@ import "./CSS/App.css";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <nav class="navbar">
-      <div class="container-fluid">
+    <nav className="navbar">
+      <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img
             src="/Roamify.png"
