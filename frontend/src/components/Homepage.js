@@ -8,7 +8,7 @@ function Homepage() {
       <div className="row gx-5">
         <div className="col-md-4">
           <div className="card shadow-lg rounded" style={{ height: "100%" }}>
-            <img src="/Lahore.jpg" 
+            <img src="./Lahore.jpg" 
               className="card-img-top rounded-top"
               alt="Lahore"
               style={{
