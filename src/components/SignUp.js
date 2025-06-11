@@ -93,7 +93,7 @@ function SignUp() {
               onChange={(e) =>
                 setFormData({ ...formData, [field]: e.target.value })
               }
-              placeholder={"Enter ${field}"}
+              placeholder={`Enter ${field}`}
             />
             <small className="error">{errors[field]}</small>
           </div>
