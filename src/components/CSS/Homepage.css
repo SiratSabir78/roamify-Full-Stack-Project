@@ -1,0 +1,14 @@
+body {
+  background: linear-gradient(to right, #eeccfd, #a6dbf3);
+}
+.container {
+  font-family: Garamond, serif;
+}
+.detailButton {
+  background-color: #a6dbf3 !important;
+  color: black;
+  border: none;
+}
+.detailButton:hover {
+  background-color: #7dc3e8;
+}
