@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const User = require("./models/User");
 
+const adminRoutes = require("./routes/admin");
+const cityRoutes = require("./routes/city");
+const bookingRoutes = require("./routes/booking");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -13,6 +17,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Connection error:", err));
 
+// Existing signup route
 app.post("/signup", async (req, res) => {
   try {
     console.log("Received signup:", req.body);
@@ -25,9 +30,12 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Admin, City and Booking routes
+app.use("/admin", adminRoutes);
+app.use("/cities", cityRoutes);
+app.use("/bookings", bookingRoutes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log("Server running on port ${PORT}");
-
-
+  console.log(`Server running on port ${PORT}`);
 });
