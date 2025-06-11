@@ -1,90 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./CSS/CommunityForum.css";
+import { Link } from "react-router-dom";
 
 const CommunityForum = () => {
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      title: "What are the must-visit places in Lahore?",
-      description:
-        "I'm visiting Lahore for the first time. Any recommendations?",
-      answers: [
-        {
-          id: 1,
-          text: "Definitely Badshahi Mosque and Lahore Fort!",
-          likes: 3,
-        },
-        { id: 2, text: "Try food street in old Lahore at night.", likes: 5 },
-      ],
-    },
-    {
-      id: 2,
-      title: "Best time to visit Hunza Valley?",
-      description: "Planning a trip with family. Weather concerns?",
-      answers: [
-        { id: 1, text: "April to September is beautiful.", likes: 2 },
-        { id: 2, text: "Avoid winter unless you're used to snow.", likes: 1 },
-      ],
-    },
-  ]);
-
+  const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [newAnswer, setNewAnswer] = useState("");
   const [askingQuestion, setAskingQuestion] = useState(false);
   const [questionTitle, setQuestionTitle] = useState("");
   const [questionDesc, setQuestionDesc] = useState("");
+  const [user, setUser] = useState(null);
 
-  const handleLike = (questionId, answerId) => {
-    const updatedQuestions = questions.map((q) =>
-      q.id === questionId
-        ? {
-            ...q,
-            answers: q.answers.map((a) =>
-              a.id === answerId ? { ...a, likes: a.likes + 1 } : a
-            ),
-          }
-        : q
-    );
-    setQuestions(updatedQuestions);
+  useEffect(() => {
+    fetchQuestions();
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+  }, []);
+
+  const fetchQuestions = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/questions");
+      setQuestions(res.data);
+    } catch (err) {
+      console.error("Error fetching questions:", err);
+    }
   };
 
-  const handleAddAnswer = () => {
+  const handleAddAnswer = async () => {
     if (!newAnswer.trim()) return;
+    if (!user) return alert("Please log in to post an answer.");
 
-    const updatedQuestions = questions.map((q) =>
-      q.id === selectedQuestion.id
-        ? {
-            ...q,
-            answers: [
-              ...q.answers,
-              {
-                id: Date.now(),
-                text: newAnswer,
-                likes: 0,
-              },
-            ],
-          }
-        : q
-    );
-
-    setQuestions(updatedQuestions);
-    setNewAnswer("");
+    try {
+      await axios.post(
+        `http://localhost:5000/api/questions/${selectedQuestion._id}/answer`,
+        {
+          text: newAnswer,
+          username: user.username, // include username if your schema allows it
+        }
+      );
+      setNewAnswer("");
+      fetchQuestions();
+      const updated = await axios.get(
+        `http://localhost:5000/api/questions/${selectedQuestion._id}`
+      );
+      setSelectedQuestion(updated.data);
+    } catch (err) {
+      console.error("Error adding answer:", err);
+    }
   };
 
-  const handleAskQuestion = () => {
+  const handleAskQuestion = async () => {
     if (!questionTitle.trim() || !questionDesc.trim()) return;
+    if (!user) return alert("Please log in to ask a question.");
 
-    const newQuestion = {
-      id: Date.now(),
-      title: questionTitle,
-      description: questionDesc,
-      answers: [],
-    };
-
-    setQuestions([newQuestion, ...questions]);
-    setQuestionTitle("");
-    setQuestionDesc("");
-    setAskingQuestion(false);
+    try {
+      await axios.post("http://localhost:5000/api/questions", {
+        title: questionTitle,
+        description: questionDesc,
+        username: user.username, // optional
+      });
+      setQuestionTitle("");
+      setQuestionDesc("");
+      setAskingQuestion(false);
+      fetchQuestions();
+    } catch (err) {
+      console.error("Error posting question:", err);
+    }
   };
 
   return (
@@ -99,21 +81,29 @@ const CommunityForum = () => {
 
       {askingQuestion && (
         <div className="ask-question-form">
-          <h3>Ask a New Question</h3>
-          <input
-            type="text"
-            placeholder="Enter question title..."
-            value={questionTitle}
-            onChange={(e) => setQuestionTitle(e.target.value)}
-          />
-          <textarea
-            placeholder="Describe your question in detail..."
-            value={questionDesc}
-            onChange={(e) => setQuestionDesc(e.target.value)}
-          />
-          <br />
-          <button onClick={handleAskQuestion}>Post Question</button>
-          <button onClick={() => setAskingQuestion(false)}>Cancel</button>
+          {user ? (
+            <>
+              <h3>Ask a New Question</h3>
+              <input
+                type="text"
+                placeholder="Enter question title..."
+                value={questionTitle}
+                onChange={(e) => setQuestionTitle(e.target.value)}
+              />
+              <textarea
+                placeholder="Describe your question in detail..."
+                value={questionDesc}
+                onChange={(e) => setQuestionDesc(e.target.value)}
+              />
+              <br />
+              <button onClick={handleAskQuestion}>Post Question</button>
+              <button onClick={() => setAskingQuestion(false)}>Cancel</button>
+            </>
+          ) : (
+            <p style={{ color: "red" }}>
+              ⚠️ Please <Link to="/login">log in</Link> to ask a question.
+            </p>
+          )}
         </div>
       )}
 
@@ -122,12 +112,17 @@ const CommunityForum = () => {
           <h4>Questions:</h4>
           {questions.map((q) => (
             <div
-              key={q.id}
+              key={q._id}
               className="question-card"
               onClick={() => setSelectedQuestion(q)}
             >
               <h5>{q.title}</h5>
               <p>{q.description}</p>
+              {q.username && (
+                <p>
+                  <strong>Posted by:</strong> {q.username}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -141,21 +136,31 @@ const CommunityForum = () => {
 
           <h5>Answers:</h5>
           {selectedQuestion.answers.map((a) => (
-            <div key={a.id} className="answer-card">
+            <div key={a._id} className="answer-card">
               <p>{a.text}</p>
-              <button onClick={() => handleLike(selectedQuestion.id, a.id)}>
-                👍 {a.likes}
-              </button>
+              {a.username && (
+                <p>
+                  <strong>Answered by:</strong> {a.username}
+                </p>
+              )}
             </div>
           ))}
 
-          <textarea
-            placeholder="Write your answer..."
-            value={newAnswer}
-            onChange={(e) => setNewAnswer(e.target.value)}
-          ></textarea>
-          <br />
-          <button onClick={handleAddAnswer}>Post Answer</button>
+          {user ? (
+            <>
+              <textarea
+                placeholder="Write your answer..."
+                value={newAnswer}
+                onChange={(e) => setNewAnswer(e.target.value)}
+              ></textarea>
+              <br />
+              <button onClick={handleAddAnswer}>Post Answer</button>
+            </>
+          ) : (
+            <p style={{ color: "red" }}>
+              ⚠️ Please <Link to="/login">log in</Link> to answer this question.
+            </p>
+          )}
         </div>
       )}
     </div>

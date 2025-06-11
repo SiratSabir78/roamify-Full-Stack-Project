@@ -61,7 +61,15 @@ function SignUp() {
       })
         .then((res) => res.json())
         .then((data) => {
-          alert(data.message || "Signup successful!");
+          if (data.user) {
+            // ✅ Save user to localStorage
+            localStorage.setItem("user", JSON.stringify(data.user));
+            alert("Signup successful!");
+            navigate("/community"); // redirect to community or home
+          } else {
+            alert(data.message || "Signup failed!");
+          }
+
           setFormData({
             username: "",
             email: "",
@@ -70,7 +78,6 @@ function SignUp() {
             gender: "",
             password: "",
           });
-          navigate("/homepage");
         })
         .catch((err) => {
           console.error("Signup failed", err);
