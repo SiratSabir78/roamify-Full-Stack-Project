@@ -21,7 +21,34 @@ const getCityById = async (req, res) => {
 
 const createCity = async (req, res) => {
   try {
-    const newCity = new City(req.body);
+    console.log("Request body:", req.body);
+
+    const {
+      name,
+      places,
+      description,
+      images,
+      tripDates,
+      numberOfPeople,
+      pricePerPerson,
+      favouritesCount = 0,  // Use value from request or default to 0
+      totalTravelers = 0,   // Use value from request or default to 0
+      reviews,
+    } = req.body;
+
+    const newCity = new City({
+      name,
+      places,
+      description,
+      images,
+      tripDates,
+      numberOfPeople,
+      pricePerPerson,
+      favouritesCount,
+      totalTravelers,
+      reviews,
+    });
+
     await newCity.save();
     res.status(201).json(newCity);
   } catch (err) {
@@ -31,7 +58,9 @@ const createCity = async (req, res) => {
 
 const updateCity = async (req, res) => {
   try {
-    const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { totalTravelers, ...restBody } = req.body; 
+    const updatedCity = await City.findByIdAndUpdate(req.params.id, restBody, { new: true });
+    if (!updatedCity) return res.status(404).json({ message: "City not found" });
     res.json(updatedCity);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -47,5 +76,10 @@ const deleteCity = async (req, res) => {
   }
 };
 
-module.exports = { getAllCities, getCityById, createCity, updateCity, deleteCity };
-
+module.exports = {
+  getAllCities,
+  getCityById,
+  createCity,
+  updateCity,
+  deleteCity,
+};

@@ -9,8 +9,14 @@ const citySchema = new mongoose.Schema({
   tripDates: [Date],
   numberOfPeople: Number,
   pricePerPerson: Number,
-  totalTravelers: Number,
-  favouritesCount: Number,
+  totalTravelers: {
+    type: Number,
+    default: 0,  // <- add this
+  },
+    favouritesCount: {
+    type: Number,
+    default: 0,  // <- add this
+  },
   reviews: [String],
 });
 
