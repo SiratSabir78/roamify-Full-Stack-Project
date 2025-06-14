@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const User = require("./models/User");
+const Question = require("./models/Question");
 
 const adminRoutes = require("./routes/admin");
 const cityRoutes = require("./routes/city");
@@ -30,7 +31,6 @@ app.post("/signup", async (req, res) => {
     res.status(500).json({ error: "Failed to save user" });
   }
 });
-
 
 app.get("/api/questions", async (req, res) => {
   try {
@@ -81,4 +81,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
