@@ -13,9 +13,8 @@ const questionSchema = new mongoose.Schema(
   {
     title: String,
     description: String,
-    userId: String,
     username: String,
-    time: String,
+    userId: String,
     answers: [answerSchema],
   },
   { timestamps: true }

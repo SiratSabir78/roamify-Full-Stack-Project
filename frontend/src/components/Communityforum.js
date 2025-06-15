@@ -21,7 +21,7 @@ const CommunityForum = () => {
 
   const fetchQuestions = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/community/questions");
+      const res = await axios.get("http://localhost:5000/api/questions");
       setQuestions(res.data);
     } catch (err) {
       console.error("Error fetching questions:", err);
@@ -34,7 +34,7 @@ const CommunityForum = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/community/questions/${selectedQuestion._id}/answer`,
+        `http://localhost:5000/api/questions/${selectedQuestion._id}/answer`,
         {
           text: newAnswer,
           username: user.username,
@@ -43,8 +43,9 @@ const CommunityForum = () => {
       );
       setNewAnswer("");
       fetchQuestions();
+
       const updated = await axios.get(
-        `http://localhost:5000/community/questions/${selectedQuestion._id}`
+        `http://localhost:5000/api/questions/${selectedQuestion._id}`
       );
       setSelectedQuestion(updated.data);
     } catch (err) {
@@ -53,22 +54,35 @@ const CommunityForum = () => {
   };
 
   const handleAskQuestion = async () => {
-    if (!questionTitle.trim() || !questionDesc.trim()) return;
-    if (!user) return alert("⚠️ Please log in to ask a question.");
+    if (!questionTitle.trim() || !questionDesc.trim()) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    if (!user) {
+      alert("⚠️ Please log in to ask a question.");
+      return;
+    }
 
     try {
-      await axios.post("http://localhost:5000/community/questions", {
+      const response = await axios.post("http://localhost:5000/api/questions", {
         title: questionTitle,
         description: questionDesc,
         username: user.username,
         userId: user._id,
       });
+
+      console.log("Question posted:", response.data);
       setQuestionTitle("");
       setQuestionDesc("");
       setAskingQuestion(false);
-      fetchQuestions();
+      fetchQuestions(); // reload questions
     } catch (err) {
-      console.error("Error posting question:", err);
+      console.error(
+        "Error posting question:",
+        err.response?.data || err.message
+      );
+      alert("❌ Failed to post question");
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./CSS/SignUp.css"; 
+import "./CSS/SignUp.css";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -10,15 +10,25 @@ function Login() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); 
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
-      if (res.data) {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData
+      );
+
+      if (res.data && res.data.user) {
+        // ✅ Store full user object
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user)); // 👈 Store user object
+
         navigate("/Homepage");
+      } else {
+        setError("Invalid response from server.");
       }
     } catch (err) {
       const backendError = err.response?.data?.error || "Login failed.";
@@ -58,7 +68,6 @@ function Login() {
           <div className="error">{isPasswordError ? error : ""}</div>
         </div>
 
-        {/* Show generic errors that are neither email nor password related */}
         {!isEmailError && !isPasswordError && error && (
           <div className="error">{error}</div>
         )}
