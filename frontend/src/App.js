@@ -16,7 +16,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />{" "}
-        {/* ✅ Show Homepage on root */}
         <Route path="/Homepage" element={<Homepage />} />
         <Route path="/Communityforum" element={<Communityforum />} />
         <Route path="/Login" element={<LogIn />} />
