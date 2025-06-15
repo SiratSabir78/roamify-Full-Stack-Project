@@ -1,0 +1,32 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55px;
+  background: linear-gradient(to right, #ebb5f8, #3b88ae);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+  font-weight: 600;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav-item {
+  color: #8812a5;
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+}
+
+.nav-item:hover {
+  background-color: #948a9c;
+}
+
+.active {
+  background-color: #b292e6;
+  color: #333;
+}

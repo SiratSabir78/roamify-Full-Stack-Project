@@ -10,7 +10,7 @@ import AdminDashboard from "./components/AdminDashboard";
 import AdminLogin from "./components/AdminLogin";
 import CityManager from "./components/CityManager";
 import BookingManager from "./components/BookingManagement";
-
+import UserProfile from "./components/UserProfile";
 function App() {
   return (
     <Router>
@@ -24,6 +24,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/city-manager" element={<CityManager />} />
         <Route path="/booking-manager" element={<BookingManager />} />
+        <Route path="/user-profile" element={<UserProfile/>}/>
       </Routes>
     </Router>
   );

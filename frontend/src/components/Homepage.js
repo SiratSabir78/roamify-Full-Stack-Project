@@ -3,6 +3,7 @@ import axios from "axios";
 import { getWeatherForCity } from "../Weather";
 import "./CSS/Homepage.css";
 import { useNavigate } from "react-router-dom";
+import BottomNav from "./BottomNav";
 
 function Homepage() {
   const [cities, setCities] = useState([]);
@@ -10,9 +11,12 @@ function Homepage() {
   const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
 
+  // ✅ Check token and redirect if not logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) navigate("/Login");
+    if (!token) {
+      navigate("/Login");
+    }
   }, [navigate]);
 
   useEffect(() => {
@@ -82,6 +86,8 @@ function Homepage() {
           </div>
         ))}
       </div>
+
+      <BottomNav />
     </div>
   );
 }

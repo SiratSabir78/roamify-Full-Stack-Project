@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const User = require("./models/User");
 const Question = require("./models/Question");
-
+const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 const cityRoutes = require("./routes/city");
 const bookingRoutes = require("./routes/booking");
@@ -75,6 +75,7 @@ app.use("/admin", adminRoutes);
 app.use("/cities", cityRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes); 
+app.use("/api/user", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./CSS/SignUp.css"; 
+import { useNavigate, Link } from "react-router-dom";  // ✅ import Link
+import "./CSS/SignUp.css";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -10,7 +10,7 @@ function Login() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); 
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -18,6 +18,8 @@ function Login() {
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
       if (res.data) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("token", "dummy-token"); // Fake token for routing check
         navigate("/Homepage");
       }
     } catch (err) {
@@ -58,7 +60,6 @@ function Login() {
           <div className="error">{isPasswordError ? error : ""}</div>
         </div>
 
-        {/* Show generic errors that are neither email nor password related */}
         {!isEmailError && !isPasswordError && error && (
           <div className="error">{error}</div>
         )}
@@ -66,6 +67,11 @@ function Login() {
         <button type="submit" className="submit-button">
           Log In
         </button>
+      <div className="signup-redirect">
+      <span>Don't have an account?</span>
+      <Link to="/" className="signup-link">Sign Up</Link>
+      </div>
+
       </form>
     </div>
   );

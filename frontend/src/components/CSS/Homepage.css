@@ -1,14 +1,57 @@
 body {
   background: linear-gradient(to right, #eeccfd, #a6dbf3);
 }
+
 .container {
   font-family: Garamond, serif;
 }
+
 .detailButton {
   background-color: #a6dbf3 !important;
   color: black;
   border: none;
 }
+
 .detailButton:hover {
   background-color: #7dc3e8;
+}
+
+/* Admin Dashboard Styling */
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+  font-family: Garamond, serif;
+  background: linear-gradient(to right, #eeccfd, #a6dbf3);
+}
+
+.dashboard-sidebar {
+  width: 240px;
+  background-color: #b087cb; /* soft purple tone */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-item {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: Garamond, serif;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: #9c6db3;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 30px;
+  background-color: white;
+  overflow-y: auto;
+  border-radius: 0 0 8px 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  font-family: Garamond, serif;
 }

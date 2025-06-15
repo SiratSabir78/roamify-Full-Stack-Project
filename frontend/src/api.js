@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000"; 
+const BASE_URL = "http://localhost:5000";
 
 export const adminLogin = (credentials) => {
   return axios.post(`${BASE_URL}/admin/login`, credentials);
@@ -8,6 +8,15 @@ export const adminLogin = (credentials) => {
 
 export const userLogin = (credentials) => {
   return axios.post(`${BASE_URL}/api/auth/login`, credentials);
+};
+
+// New fetchUserProfile function added
+export const fetchUserProfile = (userId) => {
+  return axios.get(`${BASE_URL}/api/user/${userId}`);
+};
+
+export const updateUserProfile = (profileData) => {
+  return axios.put(`${BASE_URL}/api/user/update`, profileData);
 };
 
 export const fetchCities = () => {
