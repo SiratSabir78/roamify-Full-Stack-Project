@@ -8,6 +8,7 @@ const Question = require("./models/Question");
 const adminRoutes = require("./routes/admin");
 const cityRoutes = require("./routes/city");
 const bookingRoutes = require("./routes/booking");
+const authRoutes = require("./routes/auth"); 
 
 const app = express();
 app.use(cors());
@@ -18,8 +19,6 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Connection error:", err));
 
-// Existing signup route
-// --- Signup Route ---
 app.post("/signup", async (req, res) => {
   try {
     console.log("Received signup:", req.body);
@@ -72,10 +71,10 @@ app.post("/api/questions/:id/answer", async (req, res) => {
     res.status(500).json({ error: "Error posting answer" });
   }
 });
-// Admin, City and Booking routes
 app.use("/admin", adminRoutes);
 app.use("/cities", cityRoutes);
 app.use("/bookings", bookingRoutes);
+app.use("/api/auth", authRoutes); 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
