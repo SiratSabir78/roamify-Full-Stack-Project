@@ -18,7 +18,7 @@ const Navbar = () => {
         </Link>
         <ul className="nav justify-content-end">
           <li className="nav-item">
-            <Link to="/HomePage" className="nav-link active">
+            <Link to="/" className="nav-link active">
               <strong> Home</strong>
             </Link>
           </li>
@@ -38,7 +38,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/logout" className="nav-link">
+            <Link to="/LogOut" className="nav-link">
               <strong> Logout</strong>
             </Link>
           </li>

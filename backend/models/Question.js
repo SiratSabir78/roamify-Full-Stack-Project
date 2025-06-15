@@ -1,20 +1,24 @@
-// models/Question.js
 const mongoose = require("mongoose");
-const AnswerSchema = require("./Answer");
 
-const QuestionSchema = new mongoose.Schema(
+const answerSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    answers: [AnswerSchema], // embed answers inside each question
+    text: String,
+    username: String,
+    userId: String,
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Question", QuestionSchema);
+const questionSchema = new mongoose.Schema(
+  {
+    title: String,
+    description: String,
+    userId: String,
+    username: String,
+    time: String,
+    answers: [answerSchema],
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Question", questionSchema);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./CSS/SignUp.css";
 
 function SignUp() {
@@ -62,10 +62,10 @@ function SignUp() {
         .then((res) => res.json())
         .then((data) => {
           if (data.user) {
-            // ✅ Save user to localStorage
             localStorage.setItem("user", JSON.stringify(data.user));
             alert("Signup successful!");
-            navigate("/community"); // redirect to community or home
+            navigate("/");
+            console.log("navigating to homepage");
           } else {
             alert(data.message || "Signup failed!");
           }
@@ -89,7 +89,19 @@ function SignUp() {
   return (
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="signup-form">
-        <h2>Create Your Account</h2>
+        <h2>Sign Up here</h2>
+        <h2>Create Your Account on Roamify</h2>
+        <div className="justify-content-center">
+          <Link to="/" className="navbar-brand justify-content-center">
+            <img
+              src="/Roamify.png"
+              alt="Logo"
+              width="80"
+              height="80"
+              className="d-inline-block align-text-top"
+            />
+          </Link>
+        </div>
 
         {["username", "email", "phone", "password"].map((field) => (
           <div key={field} className="form-group">
