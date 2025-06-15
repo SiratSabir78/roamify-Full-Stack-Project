@@ -11,6 +11,7 @@ import AdminLogin from "./components/AdminLogin";
 import CityManager from "./components/CityManager";
 import BookingManager from "./components/BookingManagement";
 import Logout from "./components/Logout";
+import UserProfile from "./components/UserProfile";
 function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/city-manager" element={<CityManager />} />
         <Route path="/booking-manager" element={<BookingManager />} />
         <Route path="/Logout" element={<Logout />} />
+        <Route path="/user-profile" element={<UserProfile/>}/>
       </Routes>
     </Router>
   );

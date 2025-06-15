@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./CSS/SignUp.css";
 
 function Login() {
@@ -21,11 +21,9 @@ function Login() {
         formData
       );
 
-      if (res.data && res.data.user) {
-        // ✅ Store full user object
+      if (res.data && res.data.user && res.data.token) {
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user)); // 👈 Store user object
-
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         navigate("/Homepage");
       } else {
         setError("Invalid response from server.");
@@ -75,6 +73,11 @@ function Login() {
         <button type="submit" className="submit-button">
           Log In
         </button>
+
+        <div className="signup-redirect">
+          <span>Don't have an account? </span>
+          <Link to="/" className="signup-link">Sign Up</Link>
+        </div>
       </form>
     </div>
   );

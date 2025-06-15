@@ -3,6 +3,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const User = require("./models/User");
+const Question = require("./models/Question");
+const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 const cityRoutes = require("./routes/city");
 const bookingRoutes = require("./routes/booking");
@@ -27,6 +30,8 @@ app.use("/cities", cityRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", communityRoutes); // <-- All question/answer routes are under /api/questions
+app.use("/api/auth", authRoutes); 
+app.use("/api/user", userRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

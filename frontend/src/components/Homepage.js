@@ -4,6 +4,7 @@ import { getWeatherForCity } from "../Weather";
 import "./CSS/Homepage.css";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
+import BottomNav from "./BottomNav";
 
 function Homepage() {
   const [cities, setCities] = useState([]);
@@ -12,6 +13,7 @@ function Homepage() {
   const navigate = useNavigate();
 
   // 🔐 Redirect to login if not authenticated
+  // ✅ Check token and redirect if not logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -106,7 +108,9 @@ function Homepage() {
             </div>
           ))}
         </div>
-      </div>
+  
+      <BottomNav />
+    </div>
     </>
   );
 }
