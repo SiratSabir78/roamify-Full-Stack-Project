@@ -1,7 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./CSS/SignUp.css"; 
 
-const Login = () => {
-  return <div>Login</div>;
-};
+function Login() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); 
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
+      if (res.data) {
+        navigate("/Homepage");
+      }
+    } catch (err) {
+      const backendError = err.response?.data?.error || "Login failed.";
+      setError(backendError);
+    }
+  };
+
+  const isEmailError = error.toLowerCase().includes("email");
+  const isPasswordError = error.toLowerCase().includes("password");
+
+  return (
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <h2>Log In</h2>
+
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <div className="error">{isEmailError ? error : ""}</div>
+        </div>
+
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <div className="error">{isPasswordError ? error : ""}</div>
+        </div>
+
+        {/* Show generic errors that are neither email nor password related */}
+        {!isEmailError && !isPasswordError && error && (
+          <div className="error">{error}</div>
+        )}
+
+        <button type="submit" className="submit-button">
+          Log In
+        </button>
+      </form>
+    </div>
+  );
+}
 
 export default Login;

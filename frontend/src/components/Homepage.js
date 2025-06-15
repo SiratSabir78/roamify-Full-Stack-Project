@@ -2,11 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getWeatherForCity } from "../Weather";
 import "./CSS/Homepage.css";
+import { useNavigate } from "react-router-dom";
 
 function Homepage() {
   const [cities, setCities] = useState([]);
   const [weather, setWeather] = useState({});
   const [showNotifications, setShowNotifications] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) navigate("/Login");
+  }, [navigate]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -33,7 +40,6 @@ function Homepage() {
 
   return (
     <div className="container py-3">
-      {/* 🔔 Notification Button */}
       <div className="text-center mb-3">
         <button
           className="btn btn-warning"
@@ -43,7 +49,6 @@ function Homepage() {
         </button>
       </div>
 
-      {/* 🔔 Notification Panel */}
       {showNotifications && (
         <div className="alert alert-info text-start">
           <h5>🌦️ Weather Alerts</h5>

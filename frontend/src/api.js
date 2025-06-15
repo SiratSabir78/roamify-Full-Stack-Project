@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000"; // Change this if your backend URL is different
+const BASE_URL = "http://localhost:5000"; 
 
 export const adminLogin = (credentials) => {
   return axios.post(`${BASE_URL}/admin/login`, credentials);
+};
+
+export const userLogin = (credentials) => {
+  return axios.post(`${BASE_URL}/api/auth/login`, credentials);
 };
 
 export const fetchCities = () => {
@@ -25,4 +29,3 @@ export const deleteCity = (cityId) => {
 export const fetchBookings = () => {
   return axios.get(`${BASE_URL}/bookings`);
 };
-
