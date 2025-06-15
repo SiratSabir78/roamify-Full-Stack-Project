@@ -1,17 +1,7 @@
-const mongoose = require("mongoose");
+const express = require("express");
+const router = express.Router();
+const { loginUser } = require("../controllers/authController");
 
-const bookingSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  cityId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "City",
-  },
-  date: Date,
-  numberOfPeople: Number,
-  totalPrice: Number,
-});
+router.post("/login", loginUser);
 
-module.exports = mongoose.model("Booking", bookingSchema);
+module.exports = router;
