@@ -7,7 +7,6 @@ import BottomNav from "./BottomNav";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-
 function Homepage() {
   const [cities, setCities] = useState([]);
   const [weather, setWeather] = useState({});
@@ -76,6 +75,14 @@ function Homepage() {
         { userId }
       );
       setFavorites(res.data.favorites || []);
+
+      // Optional: update local city list to reflect favouritesCount change
+      const updatedCities = cities.map((city) =>
+        city._id === cityId
+          ? { ...city, favouritesCount: res.data.updatedFavouritesCount }
+          : city
+      );
+      setCities(updatedCities);
     } catch (err) {
       console.error("Favorite error:", err.response?.data || err.message);
       alert("Failed to update favorites.");
@@ -135,10 +142,10 @@ function Homepage() {
                   </div>
                   <div className="d-flex justify-content-between align-items-center mt-3">
                     <Link to={`/city/${city._id}`} className="w-75">
-                        <button className="btn btn-outline-primary w-100">
-                          See more details!
-                        </button>
-                      </Link>
+                      <button className="btn btn-outline-primary w-100">
+                        See more details!
+                      </button>
+                    </Link>
                     <button
                       className={`btn ms-2 ${
                         isFavorite(city._id)
