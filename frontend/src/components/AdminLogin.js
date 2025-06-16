@@ -50,7 +50,7 @@ async function handleSubmit(e) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button className="submit-button" type="submit">Login</button>
       </form>
       {error && <p className="error">{error}</p>}
     </div>

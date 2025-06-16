@@ -1,8 +1,7 @@
-/* SignUp.css */
 .signup-container {
   max-width: 450px;
-  margin: 40px auto;
-  padding: 30px 25px;
+  margin: 80px auto;
+  padding: 50px 25px;
   background-color: #fefefe;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
@@ -18,7 +17,7 @@
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 2px;
   display: flex;
   flex-direction: column;
 }
@@ -70,7 +69,6 @@
   background: linear-gradient(to right, #5a2a83, #8f5cbf);
 }
 
-/* Map iframe styling */
 .signup-container iframe {
   border-radius: 8px;
   margin-top: 12px;

@@ -76,7 +76,7 @@ function Login() {
 
         <div className="signup-redirect">
           <span>Don't have an account? </span>
-          <Link to="/" className="signup-link">Sign Up</Link>
+          <Link to="/SignUp" className="signup-link">Sign Up</Link>
         </div>
       </form>
     </div>
