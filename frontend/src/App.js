@@ -32,7 +32,8 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/city/:id" element={<CityDetails />} />
-        <Route path="/Reviews" element={<Reviews />} />      </Routes>
+        <Route path="/Reviews" element={<Reviews />} />{" "}
+      </Routes>
     </Router>
   );
 }

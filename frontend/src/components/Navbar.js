@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link to="/Homepage" className="navbar-brand">
           <img
             src="/Roamify.png"
             alt="Logo"
@@ -18,7 +18,7 @@ const Navbar = () => {
         </Link>
         <ul className="nav justify-content-end">
           <li className="nav-item">
-            <Link to="/" className="nav-link active">
+            <Link to="/Homepage" className="nav-link active">
               <strong> Home</strong>
             </Link>
           </li>
