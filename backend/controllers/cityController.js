@@ -1,5 +1,6 @@
 const City = require("../models/City");
 
+// GET all cities
 const getAllCities = async (req, res) => {
   try {
     const cities = await City.find();
@@ -9,6 +10,7 @@ const getAllCities = async (req, res) => {
   }
 };
 
+// GET a single city by ID
 const getCityById = async (req, res) => {
   try {
     const city = await City.findById(req.params.id);
@@ -19,6 +21,7 @@ const getCityById = async (req, res) => {
   }
 };
 
+// POST create a new city
 const createCity = async (req, res) => {
   try {
     console.log("Request body:", req.body);
@@ -31,8 +34,8 @@ const createCity = async (req, res) => {
       tripDates,
       numberOfPeople,
       pricePerPerson,
-      favouritesCount = 0,  // Use value from request or default to 0
-      totalTravelers = 0,   // Use value from request or default to 0
+      favouritesCount = 0,
+      totalTravelers = 0,
       reviews,
     } = req.body;
 
@@ -56,17 +59,22 @@ const createCity = async (req, res) => {
   }
 };
 
+// PUT update a city
 const updateCity = async (req, res) => {
   try {
-    const { totalTravelers, ...restBody } = req.body; 
-    const updatedCity = await City.findByIdAndUpdate(req.params.id, restBody, { new: true });
-    if (!updatedCity) return res.status(404).json({ message: "City not found" });
+    const { totalTravelers, ...restBody } = req.body;
+    const updatedCity = await City.findByIdAndUpdate(req.params.id, restBody, {
+      new: true,
+    });
+    if (!updatedCity)
+      return res.status(404).json({ message: "City not found" });
     res.json(updatedCity);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+// DELETE a city
 const deleteCity = async (req, res) => {
   try {
     await City.findByIdAndDelete(req.params.id);

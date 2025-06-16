@@ -11,12 +11,13 @@ import CityManager from "./components/CityManager";
 import BookingManager from "./components/BookingManagement";
 import Logout from "./components/Logout";
 import UserProfile from "./components/UserProfile";
-import HomeOptions from "./components/LandingPage"; 
+import HomeOptions from "./components/LandingPage";
+import Favourites from "./components/Favourites";
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomeOptions />} /> {/* ✅ default landing page */}
+        <Route path="/" element={<HomeOptions />} />{" "}
         <Route path="/Homepage" element={<Homepage />} />
         <Route path="/Communityforum" element={<Communityforum />} />
         <Route path="/Login" element={<LogIn />} />
@@ -27,6 +28,7 @@ function App() {
         <Route path="/booking-manager" element={<BookingManager />} />
         <Route path="/Logout" element={<Logout />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/favourites" element={<Favourites />} />
       </Routes>
     </Router>
   );

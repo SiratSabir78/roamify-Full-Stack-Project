@@ -11,11 +11,8 @@ function BottomNav() {
       <NavLink to="/reviews" className="nav-item" activeclassname="active">
         Reviews
       </NavLink>
-      <NavLink to="/favorites" className="nav-item" activeclassname="active">
+      <NavLink to="/favourites" className="nav-item" activeclassname="active">
         Favorites
-      </NavLink>
-      <NavLink to="/user-profile" className="nav-item" activeclassname="active">
-        Profile
       </NavLink>
     </nav>
   );
