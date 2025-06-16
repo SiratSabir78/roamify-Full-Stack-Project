@@ -20,14 +20,13 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-app.use("/admin", adminRoutes);
-app.use("/cities", cityRoutes); // GET /cities/:id etc
-app.use("/bookings", bookingRoutes);
+// All APIs under /api prefix
+app.use("/api/admin", adminRoutes);
+app.use("/api/cities", cityRoutes);
+app.use("/api/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api", communityRoutes);
-
-// Only one user route base for consistency:
-app.use("/api/users", userRoutes);
+app.use("/api/community", communityRoutes);
+app.use("/api/users", userRoutes); // ✅ your favorite route lives here
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
