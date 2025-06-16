@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
       rating: Number,
     },
   ],
-  favouriteCities: [String],
+  favouriteCities: [{ type: mongoose.Schema.Types.ObjectId, ref: "City" }],
   citiesTravelled: [String],
   questions: [String],
   isAdmin: { type: Boolean, default: false },

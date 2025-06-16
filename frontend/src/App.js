@@ -11,9 +11,10 @@ import CityManager from "./components/CityManager";
 import BookingManager from "./components/BookingManagement";
 import Logout from "./components/Logout";
 import UserProfile from "./components/UserProfile";
-import HomeOptions from "./components/LandingPage"; 
+import HomeOptions from "./components/LandingPage";
 import CityDetails from "./components/CityDetails";
 import Reviews from "./components/reviews";
+import Favourites from "./components/Favourites";
 function App() {
   return (
     <Router>
@@ -30,7 +31,9 @@ function App() {
         <Route path="/Logout" element={<Logout />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/city/:id" element={<CityDetails />} />
-        <Route path="/Reviews" element={<Reviews />} />      </Routes>
+        <Route path="/Reviews" element={<Reviews />} />        
+        <Route path="/favourites" element={<Favourites />} />
+      </Routes>
     </Router>
   );
 }

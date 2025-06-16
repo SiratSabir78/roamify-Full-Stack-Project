@@ -23,7 +23,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/profile" className="nav-link">
+            <Link to="/user-profile" className="nav-link">
               <strong> Profile</strong>
             </Link>
           </li>
@@ -35,6 +35,11 @@ const Navbar = () => {
           <li className="nav-item">
             <Link to="/Communityforum" className="nav-link">
               <strong> Community Forum</strong>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/favourites" className="nav-link">
+              <strong> Favourites</strong>
             </Link>
           </li>
           <li className="nav-item">
