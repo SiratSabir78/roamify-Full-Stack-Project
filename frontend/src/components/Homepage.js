@@ -76,7 +76,6 @@ function Homepage() {
       );
       setFavorites(res.data.favorites || []);
 
-      // Optional: update local city list to reflect favouritesCount change
       const updatedCities = cities.map((city) =>
         city._id === cityId
           ? { ...city, favouritesCount: res.data.updatedFavouritesCount }
