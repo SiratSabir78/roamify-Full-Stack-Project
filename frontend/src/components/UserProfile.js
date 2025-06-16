@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { fetchUserProfile, updateUserProfile } from "../api";
 import "./CSS/UserProfile.css";
+import BottomNav from './BottomNav'; 
+import Navbar from "./Navbar";
+
 
 function UserProfile() {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -98,6 +101,8 @@ function UserProfile() {
   if (loading) return <div>Loading profile...</div>;
 
   return (
+    <>
+    <Navbar />
     <div className="profile-container">
       <h2>User Profile</h2>
       {message && <div className="form-success">{message}</div>}
@@ -186,7 +191,9 @@ function UserProfile() {
           </button>
         </div>
       )}
+      <BottomNav /> 
     </div>
+    </>
   );
 }
 

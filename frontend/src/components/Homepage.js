@@ -5,6 +5,8 @@ import "./CSS/Homepage.css";
 import Navbar from "./Navbar";
 import BottomNav from "./BottomNav";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 function Homepage() {
   const [cities, setCities] = useState([]);
@@ -132,9 +134,11 @@ function Homepage() {
                     <p className="card-text">{city.description}</p>
                   </div>
                   <div className="d-flex justify-content-between align-items-center mt-3">
-                    <button className="btn btn-outline-primary w-75">
-                      See more details!
-                    </button>
+                    <Link to={`/city/${city._id}`} className="w-75">
+                        <button className="btn btn-outline-primary w-100">
+                          See more details!
+                        </button>
+                      </Link>
                     <button
                       className={`btn ms-2 ${
                         isFavorite(city._id)

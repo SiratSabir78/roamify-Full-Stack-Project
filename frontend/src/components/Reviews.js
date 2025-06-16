@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './CSS/Reviews.css';
+import BottomNav from './BottomNav'; 
+import Navbar from "./Navbar";
 
 const Reviews = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -56,7 +58,9 @@ const Reviews = () => {
   };
 
   return (
-    <div className="reviews-container">
+    <>
+    <Navbar />
+    <div className="reviews-container pb-5"> {/* Add padding to avoid overlap with nav */}
       <h2>Your Reviews</h2>
       {userReviewsByCity.length === 0 && <p>No reviews found.</p>}
       {userReviewsByCity.map((city) => (
@@ -80,7 +84,9 @@ const Reviews = () => {
           ))}
         </div>
       ))}
+      <BottomNav /> 
     </div>
+    </>
   );
 };
 
