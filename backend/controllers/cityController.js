@@ -1,4 +1,6 @@
 const City = require("../models/City");
+const User = require("../models/User");
+const { v4: uuidv4 } = require("uuid");
 
 const getAllCities = async (req, res) => {
   try {
@@ -21,34 +23,7 @@ const getCityById = async (req, res) => {
 
 const createCity = async (req, res) => {
   try {
-    console.log("Request body:", req.body);
-
-    const {
-      name,
-      places,
-      description,
-      images,
-      tripDates,
-      numberOfPeople,
-      pricePerPerson,
-      favouritesCount = 0,  // Use value from request or default to 0
-      totalTravelers = 0,   // Use value from request or default to 0
-      reviews,
-    } = req.body;
-
-    const newCity = new City({
-      name,
-      places,
-      description,
-      images,
-      tripDates,
-      numberOfPeople,
-      pricePerPerson,
-      favouritesCount,
-      totalTravelers,
-      reviews,
-    });
-
+    const newCity = new City(req.body);
     await newCity.save();
     res.status(201).json(newCity);
   } catch (err) {
@@ -58,8 +33,7 @@ const createCity = async (req, res) => {
 
 const updateCity = async (req, res) => {
   try {
-    const { totalTravelers, ...restBody } = req.body; 
-    const updatedCity = await City.findByIdAndUpdate(req.params.id, restBody, { new: true });
+    const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedCity) return res.status(404).json({ message: "City not found" });
     res.json(updatedCity);
   } catch (err) {
@@ -76,10 +50,64 @@ const deleteCity = async (req, res) => {
   }
 };
 
+const addCityReview = async (req, res) => {
+  try {
+    const { userId, text, rating } = req.body;
+    const cityId = req.params.id;
+
+    const user = await User.findById(userId);
+    const city = await City.findById(cityId);
+
+    if (!user || !city) return res.status(404).json({ message: "User or city not found" });
+
+    const review = {
+      id: uuidv4(),
+      userId,
+      username: user.username,
+      text,
+      rating,
+    };
+
+    city.reviews.push(review);
+    user.reviews.push({ ...review, cityId, cityName: city.name });
+
+    await city.save();
+    await user.save();
+
+    res.status(201).json({ message: "Review added", review });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteCityReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    const { userId } = req.body;
+
+    const city = await City.findById(req.params.id);
+    const user = await User.findById(userId);
+
+    if (!city || !user) return res.status(404).json({ message: "City or user not found" });
+
+    city.reviews = city.reviews.filter((r) => r.id !== reviewId);
+    user.reviews = user.reviews.filter((r) => r.id !== reviewId);
+
+    await city.save();
+    await user.save();
+
+    res.json({ message: "Review deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllCities,
   getCityById,
   createCity,
   updateCity,
   deleteCity,
+  addCityReview,
+  deleteCityReview,
 };

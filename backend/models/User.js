@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId },
   username: String,
   email: String,
   phone: String,
@@ -9,11 +8,19 @@ const userSchema = new mongoose.Schema({
   gender: String,
   password: String,
   image: String,
-  reviews: [String],
+  reviews: [
+    {
+      id: String,
+      cityId: { type: mongoose.Schema.Types.ObjectId, ref: "City" },
+      cityName: String,
+      text: String,
+      rating: Number,
+    },
+  ],
   favouriteCities: [String],
   citiesTravelled: [String],
   questions: [String],
-  isAdmin: { type: Boolean, default: false }, // to identify admin users
+  isAdmin: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("User", userSchema);

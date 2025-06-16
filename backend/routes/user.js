@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { updateUserProfile, getUserProfile } = require("../controllers/userController");
 
-// Get user profile by id (optional)
+// Get user profile by id
 router.get("/:id", getUserProfile);
 
 // Update user profile
