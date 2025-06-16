@@ -77,11 +77,19 @@ function Favourites() {
     .sort((a, b) => b.favouritesCount - a.favouritesCount)
     .slice(0, 3);
 
+  // Sort for most traveled city
+  const sortedByTravelers = [...allCities].sort(
+    (a, b) => b.totalTravelers - a.totalTravelers
+  );
+  const mostTraveledCity = sortedByTravelers[0];
+
   return (
     <>
       <Navbar />
       <div className="container py-4">
         <h2 className="mb-4 text-center">❤️ Your Saved Destinations</h2>
+
+        {/* Two Column Section */}
         <div className="row mb-5">
           <div className="col-md-6">
             {favoriteCities.length > 0 && (
@@ -121,7 +129,7 @@ function Favourites() {
                     {mostFavoritedCities[0].description}
                   </p>
                   <span className="badge bg-success">
-                    {mostFavoritedCities[0].favouritesCount} Favourite
+                    {mostFavoritedCities[0].favouritesCount} Favourites
                   </span>
                 </div>
               </div>
@@ -129,6 +137,26 @@ function Favourites() {
               <p className="text-muted">No data available.</p>
             )}
           </div>
+        </div>
+
+        {/* Most Traveled City Recommendation */}
+        <div className="mb-5">
+          <h4 className="text-primary mb-3">
+            🌍 Recommended Based on Travelers
+          </h4>
+          {mostTraveledCity ? (
+            <div className="card border-info shadow-sm">
+              <div className="card-body">
+                <h5 className="card-title">{mostTraveledCity.name}</h5>
+                <p className="card-text">{mostTraveledCity.description}</p>
+                <span className="badge bg-info">
+                  {mostTraveledCity.totalTravelers} Travelers
+                </span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-muted">Travel data not available.</p>
+          )}
         </div>
       </div>
       <BottomNav />
