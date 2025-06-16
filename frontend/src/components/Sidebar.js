@@ -45,11 +45,21 @@ export default function Sidebar({ selected, setSelected }) {
             Cities Management
           </li>
           <li
+            onClick={() => setSelected("monthlyBookings")} // New menu item
+            style={{
+              padding: "10px 5px",
+              cursor: "pointer",
+              backgroundColor: selected === "monthlyBookings" ? "#eee" : "transparent",
+            }}
+          >
+            Monthly Bookings
+          </li>
+          <li
             onClick={() => setSelected("logout")}
             style={{
               padding: "10px 5px",
               cursor: "pointer",
-              backgroundColor: selected === "cities" ? "#eee" : "transparent",
+              backgroundColor: selected === "logout" ? "#eee" : "transparent",
             }}
           >
             Logout

@@ -11,11 +11,11 @@ export const userLogin = (credentials) => {
 };
 
 export const fetchUserProfile = (userId) => {
-  return axios.get(`${BASE_URL}/api/user/${userId}`);
+  return axios.get(`${BASE_URL}/api/users/${userId}`);
 };
 
 export const updateUserProfile = (profileData) => {
-  return axios.put(`${BASE_URL}/api/user/update`, profileData);
+  return axios.put(`${BASE_URL}/api/users/update`, profileData);
 };
 
 export const fetchCities = () => {
@@ -46,4 +46,12 @@ export const deleteReview = (cityId, reviewId, userId) => {
   return axios.delete(`${BASE_URL}/cities/${cityId}/reviews/${reviewId}`, {
     data: { userId },
   });
+};
+
+export const fetchUserStats = async () => {
+  return axios.get(`${BASE_URL}/api/users/stats/gender`);
+};
+
+export const fetchMonthlyCityBookingSummary = () => {
+  return axios.get(`${BASE_URL}/bookings/summary/monthly-city`);
 };
