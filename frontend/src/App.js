@@ -15,11 +15,13 @@ import HomeOptions from "./components/LandingPage";
 import Favourites from "./components/Favourites";
 import CityDetails from "./components/CityDetails";
 import Reviews from "./components/Reviews";
+import BookingsPage from "./components/BookingsPage"; // ✅ Add this
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomeOptions />} />{" "}
+        <Route path="/" element={<HomeOptions />} />
         <Route path="/Homepage" element={<Homepage />} />
         <Route path="/Communityforum" element={<Communityforum />} />
         <Route path="/Login" element={<LogIn />} />
@@ -33,6 +35,7 @@ function App() {
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/city/:id" element={<CityDetails />} />
         <Route path="/Reviews" element={<Reviews />} />{" "}
+        <Route path="/bookings" element={<BookingsPage />} /> {/* ✅ Added */}
       </Routes>
     </Router>
   );
