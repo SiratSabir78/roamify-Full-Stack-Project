@@ -4,8 +4,7 @@ import { getWeatherForCity } from "../Weather";
 import "./CSS/Homepage.css";
 import Navbar from "./Navbar";
 import BottomNav from "./BottomNav";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Homepage() {
   const [cities, setCities] = useState([]);
@@ -26,7 +25,7 @@ function Homepage() {
   useEffect(() => {
     const fetchCitiesAndWeather = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/cities");
+        const response = await axios.get("http://localhost:5000/api/cities");
         const cityData = response.data;
         setCities(cityData);
 
@@ -53,7 +52,9 @@ function Homepage() {
     const fetchFavorites = async () => {
       if (!userId) return;
       try {
-        const res = await axios.get(`http://localhost:5000/users/${userId}`);
+        const res = await axios.get(
+          `http://localhost:5000/api/users/${userId}`
+        );
         setFavorites(res.data.favouriteCities || []);
       } catch (err) {
         console.error("Failed to fetch favorites:", err);
@@ -71,12 +72,11 @@ function Homepage() {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/users/favorite/${cityId}`,
+        `http://localhost:5000/api/users/favorite/${cityId}`,
         { userId }
       );
       setFavorites(res.data.favorites || []);
 
-      // Optional: update local city list to reflect favouritesCount change
       const updatedCities = cities.map((city) =>
         city._id === cityId
           ? { ...city, favouritesCount: res.data.updatedFavouritesCount }

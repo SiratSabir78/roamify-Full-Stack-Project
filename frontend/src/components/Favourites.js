@@ -22,7 +22,7 @@ function Favourites() {
   useEffect(() => {
     const fetchAllCities = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/cities");
+        const res = await axios.get("http://localhost:5000/api/cities");
         setAllCities(res.data);
       } catch (err) {
         console.error("Failed to fetch all cities:", err);
@@ -35,13 +35,13 @@ function Favourites() {
     const fetchFavorites = async () => {
       try {
         const userRes = await axios.get(
-          `http://localhost:5000/users/${userId}`
+          `http://localhost:5000/api/users/${userId}`
         );
         const favoriteIds = userRes.data.favouriteCities || [];
 
         const cityPromises = favoriteIds.map((id) =>
           axios
-            .get(`http://localhost:5000/cities/${id}`)
+            .get(`http://localhost:5000/api/cities/${id}`)
             .then((res) => res.data)
         );
 
@@ -60,7 +60,7 @@ function Favourites() {
   const removeFavorite = async (cityId) => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/users/favorite/${cityId}`,
+        `http://localhost:5000/api/users/favorite/${cityId}`,
         { userId }
       );
 
@@ -77,7 +77,6 @@ function Favourites() {
     .sort((a, b) => b.favouritesCount - a.favouritesCount)
     .slice(0, 3);
 
-  // Sort for most traveled city
   const sortedByTravelers = [...allCities].sort(
     (a, b) => b.totalTravelers - a.totalTravelers
   );
@@ -89,36 +88,50 @@ function Favourites() {
       <div className="container py-4">
         <h2 className="mb-4 text-center">❤️ Your Saved Destinations</h2>
 
-        {/* Two Column Section */}
+        {/* FAVORITE CITIES */}
         <div className="row mb-5">
-          <div className="col-md-6">
-            {favoriteCities.length > 0 && (
-              <div className="card shadow-sm rounded h-100 border-0">
-                <img
-                  src={`/${favoriteCities[0].name}.jpg`}
-                  className="card-img-top"
-                  alt={favoriteCities[0].name}
-                  style={{ height: "180px", objectFit: "cover" }}
-                  onError={(e) => {
-                    e.target.src = "/default-city.jpg";
-                  }}
-                />
-                <div className="card-body d-flex flex-column justify-content-between">
-                  <div>
-                    <h5 className="card-title">{favoriteCities[0].name}</h5>
-                    <p className="card-text">{favoriteCities[0].description}</p>
+          <div className="col-12">
+            <h4 className="mb-3">📍 Your Favorite Cities</h4>
+            {favoriteCities.length === 0 ? (
+              <p className="text-muted">
+                You haven't saved any destinations yet.
+              </p>
+            ) : (
+              <div className="row g-4">
+                {favoriteCities.map((city) => (
+                  <div className="col-md-6" key={city._id}>
+                    <div className="card shadow-sm rounded h-100 border-0">
+                      <img
+                        src={`/${city.name}.jpg`}
+                        className="card-img-top"
+                        alt={city.name}
+                        style={{ height: "180px", objectFit: "cover" }}
+                        onError={(e) => {
+                          e.target.src = "/default-city.jpg";
+                        }}
+                      />
+                      <div className="card-body d-flex flex-column justify-content-between">
+                        <div>
+                          <h5 className="card-title">{city.name}</h5>
+                          <p className="card-text">{city.description}</p>
+                        </div>
+                        <button
+                          className="btn btn-outline-danger mt-3"
+                          onClick={() => removeFavorite(city._id)}
+                        >
+                          Remove from Favorites
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <button
-                    className="btn btn-outline-danger mt-3"
-                    onClick={() => removeFavorite(favoriteCities[0]._id)}
-                  >
-                    Remove from Favorites
-                  </button>
-                </div>
+                ))}
               </div>
             )}
           </div>
+        </div>
 
+        {/* TOP FAVORITE CITY */}
+        <div className="row mb-5">
           <div className="col-md-6">
             <h5>📌 Top Favorite Destination</h5>
             {mostFavoritedCities.length > 0 ? (
@@ -139,26 +152,28 @@ function Favourites() {
           </div>
         </div>
 
-        {/* New Section: Most Traveled Recommendation */}
-        <div className="mb-5">
-          <h4 className="text-primary mb-3">
-            🌍 Recommended Based on Travelers
-          </h4>
-          {allCities.length > 0 ? (
-            <div className="card border-info shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">
-                  {allCities[0].name} – Most Traveled
-                </h5>
-                <p className="card-text">{allCities[0].description}</p>
-                <span className="badge bg-info">
-                  {allCities[0].totalTravelers} Travelers
-                </span>
+        {/* MOST TRAVELED CITY */}
+        <div className="row mb-5">
+          <div className="col-md-6">
+            <h4 className="text-primary mb-3">
+              🌍 Recommended Based on Travelers
+            </h4>
+            {mostTraveledCity ? (
+              <div className="card border-info shadow-sm">
+                <div className="card-body">
+                  <h5 className="card-title">
+                    {mostTraveledCity.name} – Most Traveled
+                  </h5>
+                  <p className="card-text">{mostTraveledCity.description}</p>
+                  <span className="badge bg-info">
+                    {mostTraveledCity.totalTravelers} Travelers
+                  </span>
+                </div>
               </div>
-            </div>
-          ) : (
-            <p className="text-muted">Travel data not available.</p>
-          )}
+            ) : (
+              <p className="text-muted">Travel data not available.</p>
+            )}
+          </div>
         </div>
       </div>
       <BottomNav />
