@@ -139,18 +139,20 @@ function Favourites() {
           </div>
         </div>
 
-        {/* Most Traveled City Recommendation */}
+        {/* New Section: Most Traveled Recommendation */}
         <div className="mb-5">
           <h4 className="text-primary mb-3">
             🌍 Recommended Based on Travelers
           </h4>
-          {mostTraveledCity ? (
+          {allCities.length > 0 ? (
             <div className="card border-info shadow-sm">
               <div className="card-body">
-                <h5 className="card-title">{mostTraveledCity.name}</h5>
-                <p className="card-text">{mostTraveledCity.description}</p>
+                <h5 className="card-title">
+                  {allCities[0].name} – Most Traveled
+                </h5>
+                <p className="card-text">{allCities[0].description}</p>
                 <span className="badge bg-info">
-                  {mostTraveledCity.totalTravelers} Travelers
+                  {allCities[0].totalTravelers} Travelers
                 </span>
               </div>
             </div>
