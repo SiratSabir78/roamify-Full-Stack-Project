@@ -72,7 +72,8 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-// Toggle add/remove favorite city
+const City = require("../models/City");
+
 const toggleFavoriteCity = async (req, res) => {
   const { userId } = req.body;
   const { cityId } = req.params;
@@ -81,32 +82,63 @@ const toggleFavoriteCity = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (!user.favouriteCities) user.favouriteCities = [];
+    const city = await City.findById(cityId);
+    if (!city) return res.status(404).json({ error: "City not found" });
 
-    const index = user.favouriteCities.findIndex(
-      (id) => id.toString() === cityId
-    );
+    const index = user.favouriteCities.indexOf(cityId);
+    let message = "";
 
     if (index > -1) {
-      user.favouriteCities.splice(index, 1); // remove
+      // City is already in favorites → remove it
+      user.favouriteCities.splice(index, 1);
+      city.favouritesCount = Math.max(0, city.favouritesCount - 1);
+      message = "City removed from favorites";
     } else {
-      user.favouriteCities.push(new mongoose.Types.ObjectId(cityId)); // add
+      // City not in favorites → add it
+      user.favouriteCities.push(cityId);
+      city.favouritesCount += 1;
+      message = "City added to favorites";
     }
 
-    const updatedUser = await user.save();
+    await user.save();
+    await city.save();
 
-    return res.status(200).json({
-      message: "Favorites updated successfully",
-      favorites: updatedUser.favouriteCities,
+    res.json({
+      message,
+      favorites: user.favouriteCities,
+      updatedFavouritesCount: city.favouritesCount,
     });
-  } catch (error) {
-    console.error("Toggle favorite error:", error.message);
-    return res.status(500).json({ error: "Failed to update favorites" });
+  } catch (err) {
+    console.error("Error toggling favorite:", err);
+    res.status(500).json({ error: "Failed to update favorites" });
   }
 };
+
+// ✅ New: Get user gender stats
+const getUserStats = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+
+    const maleCount = await User.countDocuments({ gender: "male" });
+    const femaleCount = await User.countDocuments({ gender: "female" });
+    const otherCount = await User.countDocuments({ gender: "other" });
+
+    res.json({
+      totalUsers,
+      male: maleCount,
+      female: femaleCount,
+      other: otherCount,
+    });
+  } catch (error) {
+    console.error("Error in getUserStats:", error);  // <-- more detailed logging
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 
 module.exports = {
   getUserProfile,
   updateUserProfile,
   toggleFavoriteCity,
+  getUserStats, // ✅ export new controller
 };
