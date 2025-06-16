@@ -114,8 +114,31 @@ const toggleFavoriteCity = async (req, res) => {
   }
 };
 
+// ✅ New: Get user gender stats
+const getUserStats = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+
+    const maleCount = await User.countDocuments({ gender: "male" });
+    const femaleCount = await User.countDocuments({ gender: "female" });
+    const otherCount = await User.countDocuments({ gender: "other" });
+
+    res.json({
+      totalUsers,
+      male: maleCount,
+      female: femaleCount,
+      other: otherCount,
+    });
+  } catch (error) {
+    console.error("Error in getUserStats:", error);  // <-- more detailed logging
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   toggleFavoriteCity,
+  getUserStats, // ✅ export new controller
 };

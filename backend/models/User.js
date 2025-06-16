@@ -5,7 +5,12 @@ const userSchema = new mongoose.Schema({
   email: String,
   phone: String,
   address: String,
-  gender: String,
+  gender: {
+    type: String,
+    enum: ["male", "female", "other"],
+    required: true,
+    lowercase: true,
+  },
   password: String,
   image: String,
   reviews: [
