@@ -1,51 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
-import { fetchBookings } from "../api";
+import { Pie } from "react-chartjs-2";
+import { fetchUserStats } from "../api";
 import {
   Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
+  ArcElement,
   Tooltip,
   Legend,
 } from "chart.js";
 
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function AnalyticsChart() {
+export default function UserTypePieChart() {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const res = await fetchBookings();  // Axios response
-        const bookings = res.data;          // Extract the bookings array from response
-
-        // Count bookings per city name
-        const counts = {};
-        bookings.forEach((b) => {
-          const cityName = b.city?.name || "Unknown";
-          counts[cityName] = (counts[cityName] || 0) + 1;
-        });
+        const res = await fetchUserStats(); // { male, female, other }
+        const { male, female, other } = res.data;
 
         setChartData({
-          labels: Object.keys(counts),
+          labels: ["Male", "Female", "Other"],
           datasets: [
             {
-              label: "# Bookings per City",
-              data: Object.values(counts),
-              backgroundColor: "rgba(75,192,192,0.6)",
+              label: "User Type Distribution",
+              data: [male, female, other],
+              backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
+              hoverOffset: 6,
             },
           ],
         });
       } catch (error) {
-        console.error("Error loading bookings data for chart:", error);
+        console.error("Error fetching user stats:", error);
       }
     }
     loadData();
   }, []);
 
-  if (!chartData) return <p>Loading chart...</p>;
+  if (!chartData) return <p>Loading user chart...</p>;
 
-  return <Bar data={chartData} />;
+  return (
+    <div style={{ width: "400px", margin: "auto", textAlign: "center" }}>
+      <h3>User Gender Distribution</h3>
+      <Pie data={chartData} />
+    </div>
+  );
 }

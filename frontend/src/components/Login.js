@@ -43,8 +43,9 @@ function Login() {
         <h2>Log In</h2>
 
         <div className="form-group">
-          <label>Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
+            id="email"
             type="email"
             name="email"
             value={formData.email}
@@ -55,8 +56,9 @@ function Login() {
         </div>
 
         <div className="form-group">
-          <label>Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
+            id="password"
             type="password"
             name="password"
             value={formData.password}
