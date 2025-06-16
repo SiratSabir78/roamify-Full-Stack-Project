@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import AnalyticsChart from "./AnalyticsChart";
+import UserTypePieChart from "./AnalyticsChart"; // Existing pie chart component
 import BookingManagement from "./BookingManagement";
 import CityManagement from "./CityManager";
 import Logout from "./Logout";
+import MonthlyCityBookingChart from "./MonthlyCityBookingChart"; // <-- import your new chart component
 import "../components/CSS/AdminDashboard.css";
 
 export default function AdminDashboard() {
@@ -12,15 +13,17 @@ export default function AdminDashboard() {
   function renderPanel() {
     switch (selectedPanel) {
       case "analytics":
-        return <AnalyticsChart />;
+        return <UserTypePieChart />;
       case "bookings":
         return <BookingManagement />;
       case "cities":
         return <CityManagement />;
+      case "monthlyBookings":   // New panel
+        return <MonthlyCityBookingChart />;
       case "logout":
         return <Logout />;
       default:
-        return <AnalyticsChart />;
+        return <UserTypePieChart />;
     }
   }
 
