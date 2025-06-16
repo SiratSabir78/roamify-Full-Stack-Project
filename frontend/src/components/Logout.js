@@ -7,8 +7,6 @@ const Logout = () => {
   useEffect(() => {
     localStorage.removeItem("user");
 
-    alert("You have been logged out.");
-
     navigate("/");
   }, [navigate]);
 

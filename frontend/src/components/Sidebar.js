@@ -44,6 +44,16 @@ export default function Sidebar({ selected, setSelected }) {
           >
             Cities Management
           </li>
+          <li
+            onClick={() => setSelected("logout")}
+            style={{
+              padding: "10px 5px",
+              cursor: "pointer",
+              backgroundColor: selected === "cities" ? "#eee" : "transparent",
+            }}
+          >
+            Logout
+          </li>
         </ul>
       </nav>
     </div>

@@ -10,7 +10,6 @@ export const userLogin = (credentials) => {
   return axios.post(`${BASE_URL}/api/auth/login`, credentials);
 };
 
-// New fetchUserProfile function added
 export const fetchUserProfile = (userId) => {
   return axios.get(`${BASE_URL}/api/user/${userId}`);
 };
@@ -37,4 +36,14 @@ export const deleteCity = (cityId) => {
 
 export const fetchBookings = () => {
   return axios.get(`${BASE_URL}/bookings`);
+};
+
+export const addReview = (cityId, reviewData) => {
+  return axios.post(`${BASE_URL}/cities/${cityId}/reviews`, reviewData);
+};
+
+export const deleteReview = (cityId, reviewId, userId) => {
+  return axios.delete(`${BASE_URL}/cities/${cityId}/reviews/${reviewId}`, {
+    data: { userId },
+  });
 };

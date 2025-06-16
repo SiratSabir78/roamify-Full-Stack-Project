@@ -8,7 +8,7 @@ function BottomNav() {
       <NavLink to="/bookings" className="nav-item" activeclassname="active">
         Bookings
       </NavLink>
-      <NavLink to="/reviews" className="nav-item" activeclassname="active">
+      <NavLink to="/Reviews" className="nav-item" activeclassname="active">
         Reviews
       </NavLink>
       <NavLink to="/favorites" className="nav-item" activeclassname="active">

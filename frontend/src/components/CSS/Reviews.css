@@ -1,0 +1,114 @@
+/* Container for all reviews */
+.reviews-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+/* Each city section in Reviews page */
+.reviews-container > div {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: #fafafa;
+}
+
+/* Review card style */
+.review-card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+}
+
+/* Star ratings style */
+.review-card span,
+.list-group-item span {
+  font-size: 20px;
+  margin-right: 2px;
+}
+
+/* Color for filled stars */
+.review-card span,
+.list-group-item span {
+  color: #ffd700;
+}
+
+/* Unfilled stars color override */
+.review-card span:nth-child(n + 1) {
+  color: #ccc;
+}
+
+/* Delete button style */
+.review-card button,
+.list-group-item button {
+  background-color: #dc3545; /* bootstrap danger red */
+  border: none;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.review-card button:hover,
+.list-group-item button:hover {
+  background-color: #b52a37;
+}
+
+/* For CityDetails review list item */
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+/* Username bold */
+.list-group-item strong {
+  font-weight: 600;
+}
+
+/* Textarea styling in CityDetails */
+textarea.form-control {
+  min-height: 80px;
+  resize: vertical;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Rating stars container in CityDetails */
+.my-2 label {
+  font-weight: 600;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Stars pointer cursor */
+.my-2 span {
+  cursor: pointer;
+}
+
+/* Submit button styling */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}

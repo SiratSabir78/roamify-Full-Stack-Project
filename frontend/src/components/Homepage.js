@@ -100,9 +100,13 @@ function Homepage() {
                 <div className="card-body">
                   <h5 className="card-title">{city.name}</h5>
                   <p className="card-text">{city.description}</p>
-                  <button className="btn btn-outline-primary w-100">
-                    See more details!
-                  </button>
+                  <button
+                      className="btn btn-outline-primary w-100"
+                      onClick={() => navigate(`/city/${city._id}`)}
+                    >
+                      See more details!
+                    </button>
+
                 </div>
               </div>
             </div>

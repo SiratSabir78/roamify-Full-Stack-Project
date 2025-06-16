@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import AnalyticsChart from "./AnalyticsChart";
 import BookingManagement from "./BookingManagement";
 import CityManagement from "./CityManager";
+import Logout from "./Logout";
 import "../components/CSS/AdminDashboard.css";
 
 export default function AdminDashboard() {
@@ -16,6 +17,8 @@ export default function AdminDashboard() {
         return <BookingManagement />;
       case "cities":
         return <CityManagement />;
+      case "logout":
+        return <Logout />;
       default:
         return <AnalyticsChart />;
     }
