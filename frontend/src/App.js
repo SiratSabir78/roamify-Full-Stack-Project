@@ -13,7 +13,7 @@ import Logout from "./components/Logout";
 import UserProfile from "./components/UserProfile";
 import HomeOptions from "./components/LandingPage"; 
 import CityDetails from "./components/CityDetails";
-import Reviews from "./components/Reviews";
+import Reviews from "./components/reviews";
 function App() {
   return (
     <Router>
