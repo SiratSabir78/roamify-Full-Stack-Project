@@ -25,16 +25,6 @@ export default function Sidebar({ selected, setSelected }) {
             Analytics
           </li>
           <li
-            onClick={() => setSelected("bookings")}
-            style={{
-              padding: "10px 5px",
-              cursor: "pointer",
-              backgroundColor: selected === "bookings" ? "#eee" : "transparent",
-            }}
-          >
-            Booking Management
-          </li>
-          <li
             onClick={() => setSelected("cities")}
             style={{
               padding: "10px 5px",
@@ -43,16 +33,6 @@ export default function Sidebar({ selected, setSelected }) {
             }}
           >
             Cities Management
-          </li>
-          <li
-            onClick={() => setSelected("monthlyBookings")} // New menu item
-            style={{
-              padding: "10px 5px",
-              cursor: "pointer",
-              backgroundColor: selected === "monthlyBookings" ? "#eee" : "transparent",
-            }}
-          >
-            Monthly Bookings
           </li>
           <li
             onClick={() => setSelected("logout")}

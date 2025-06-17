@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Question = require("./models/Question");
+const Question = require("./Question");
 
 mongoose
   .connect(

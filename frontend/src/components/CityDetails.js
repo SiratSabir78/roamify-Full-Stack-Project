@@ -10,13 +10,18 @@ function CityDetails() {
   const [rating, setRating] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
 
-  useEffect(() => {
-    const fetchCity = async () => {
-      const res = await axios.get(`http://localhost:5000/cities/${id}`);
+ useEffect(() => {
+  const fetchCity = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/cities/${id}`);
       setCity(res.data);
-    };
-    fetchCity();
-  }, [id]);
+    } catch (err) {
+      console.error("Failed to fetch city details:", err);
+    }
+  };
+  fetchCity();
+}, [id]);
+
 
   const handleAddReview = async () => {
     if (!reviewText.trim() || rating === 0) {

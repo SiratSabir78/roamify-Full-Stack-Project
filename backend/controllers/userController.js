@@ -140,5 +140,5 @@ module.exports = {
   getUserProfile,
   updateUserProfile,
   toggleFavoriteCity,
-  getUserStats, // ✅ export new controller
+  getUserStats, 
 };
