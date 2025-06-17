@@ -3,7 +3,6 @@ import Sidebar from "./Sidebar";
 import UserTypePieChart from "./AnalyticsChart"; // Existing pie chart component
 import CityManagement from "./CityManager";
 import Logout from "./Logout";
-import MonthlyCityBookingChart from "./MonthlyCityBookingChart"; // <-- import your new chart component
 import "../components/CSS/AdminDashboard.css";
 
 export default function AdminDashboard() {

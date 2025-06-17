@@ -14,7 +14,7 @@ import HomeOptions from "./components/LandingPage";
 import Favourites from "./components/Favourites";
 import CityDetails from "./components/CityDetails";
 import Reviews from "./components/Reviews";
-import BookingsPage from "./components/BookingsPage"; // ✅ Add this
+import BookingsPage from "./components/BookingsPage"; 
 
 function App() {
   return (

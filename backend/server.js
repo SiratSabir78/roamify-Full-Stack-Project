@@ -11,7 +11,7 @@ const cityRoutes = require("./routes/city");
 const bookingRoutes = require("./routes/booking");
 const authRoutes = require("./routes/auth");
 const communityRoutes = require("./routes/communityRoutes");
-
+const signupRoutes = require("./routes/signup");    // Signup logic
 const app = express();
 
 // Middleware
@@ -24,23 +24,17 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
+
 // Routes
-// All frontend-used routes go under the /api prefix for consistency
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);       
+app.use("/api/auth", signupRoutes);     
 app.use("/api/cities", cityRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api", communityRoutes);
-
-// Admin routes (not under /api if not needed by frontend directly)
-app.use("/admin", adminRoutes);
-// All APIs under /api prefix
-app.use("/api/admin", adminRoutes);
-app.use("/api/cities", cityRoutes);
-app.use("/api/bookings", bookingRoutes);
-app.use("/api/auth", authRoutes);
 app.use("/api/community", communityRoutes);
-app.use("/api/users", userRoutes); // ✅ your favorite route lives here
+app.use("/api/admin", adminRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

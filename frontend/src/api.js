@@ -5,7 +5,7 @@ const BASE_URL = "http://localhost:5000";
 export const adminLogin = (credentials) => {
   return axios.post(`${BASE_URL}/api/admin/login`, credentials);
 };
-
+ 
 
 export const userLogin = (credentials) => {
   return axios.post(`${BASE_URL}/api/auth/login`, credentials);
