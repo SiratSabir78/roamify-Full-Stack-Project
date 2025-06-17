@@ -8,7 +8,6 @@ import LogIn from "./components/Login";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminLogin from "./components/AdminLogin";
 import CityManager from "./components/CityManager";
-import BookingManager from "./components/BookingManagement";
 import Logout from "./components/Logout";
 import UserProfile from "./components/UserProfile";
 import HomeOptions from "./components/LandingPage";
@@ -29,7 +28,6 @@ function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/city-manager" element={<CityManager />} />
-        <Route path="/booking-manager" element={<BookingManager />} />
         <Route path="/Logout" element={<Logout />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/favourites" element={<Favourites />} />

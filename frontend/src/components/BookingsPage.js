@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // axios is used for making HTTP requests
-
+import Navbar from "./Navbar";
+import BottomNav from "./BottomNav";
 // --- API functions (These should ideally be in your 'frontend/api.js' file) ---
 // Base URL for your backend API. Make sure this matches your backend server's address.
 const API_BASE_URL = 'http://localhost:5000/api'; // Consistently using /api prefix
@@ -213,217 +214,329 @@ export default function BookingsPage({ loggedInUserId }) {
 
 
   return (
-    <div
-      className="d-flex flex-column align-items-center py-4"
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(to bottom right, #d8b4fe, #93c5fd, #818cf8)',
-        fontFamily: 'Inter, sans-serif'
-      }}
-    >
-      {/* Custom Message Box */}
-      {messageBox.show && (
-        <div className={`alert alert-${messageBox.type} alert-dismissible fade show fixed-top mx-auto mt-3`} role="alert"
-             style={{ maxWidth: '400px', zIndex: 1050 }}>
-          {messageBox.message}
-          <button type="button" className="btn-close" onClick={hideMessageBox} aria-label="Close"></button>
-        </div>
-      )}
+    <>
+      <Navbar />
+      <div
+        className="d-flex flex-column align-items-center py-4"
+        style={{
+          minHeight: "100vh",
+          background:
+            "linear-gradient(to bottom right, #d8b4fe, #93c5fd, #818cf8)",
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
+        {/* Custom Message Box */}
+        {messageBox.show && (
+          <div
+            className={`alert alert-${messageBox.type} alert-dismissible fade show fixed-top mx-auto mt-3`}
+            role="alert"
+            style={{ maxWidth: "400px", zIndex: 1050 }}
+          >
+            {messageBox.message}
+            <button
+              type="button"
+              className="btn-close"
+              onClick={hideMessageBox}
+              aria-label="Close"
+            ></button>
+          </div>
+        )}
 
-      {/* Confirmation Modal for Deletion */}
-      {confirmDelete.show && (
-        <div className="modal d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1040 }}>
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content rounded-3 shadow">
-              <div className="modal-header bg-warning-subtle border-0">
-                <h5 className="modal-title text-warning-emphasis">Confirm Deletion</h5>
-                <button type="button" className="btn-close" onClick={handleCancelDelete} aria-label="Close"></button>
-              </div>
-              <div className="modal-body text-center py-4">
-                Are you sure you want to delete this booking? This action cannot be undone.
-              </div>
-              <div className="modal-footer justify-content-center border-0">
-                <button type="button" className="btn btn-secondary px-4 me-2 rounded-pill" onClick={handleCancelDelete}>Cancel</button>
-                <button type="button" className="btn btn-danger px-4 rounded-pill" onClick={handleConfirmDelete}>Delete</button>
+        {/* Confirmation Modal for Deletion */}
+        {confirmDelete.show && (
+          <div
+            className="modal d-block"
+            tabIndex="-1"
+            role="dialog"
+            style={{ backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1040 }}
+          >
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content rounded-3 shadow">
+                <div className="modal-header bg-warning-subtle border-0">
+                  <h5 className="modal-title text-warning-emphasis">
+                    Confirm Deletion
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={handleCancelDelete}
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body text-center py-4">
+                  Are you sure you want to delete this booking? This action
+                  cannot be undone.
+                </div>
+                <div className="modal-footer justify-content-center border-0">
+                  <button
+                    type="button"
+                    className="btn btn-secondary px-4 me-2 rounded-pill"
+                    onClick={handleCancelDelete}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger px-4 rounded-pill"
+                    onClick={handleConfirmDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="bg-white p-5 rounded-3 shadow mb-5 mt-5" style={{ maxWidth: '900px', width: '100%' }}>
-        <h1 className="display-4 fw-bold text-dark mb-5 text-center">Your Bookings</h1>
+        <div
+          className="bg-white p-5 rounded-3 shadow mb-5 mt-5"
+          style={{ maxWidth: "900px", width: "100%" }}
+        >
+          <h1 className="display-4 fw-bold text-dark mb-5 text-center">
+            Your Bookings
+          </h1>
 
-        <div className="mb-5 pb-4 border-bottom border-primary border-opacity-25">
-          <h2 className="h3 fw-semibold text-secondary mb-4 text-center">Book Your Next Adventure!</h2>
-          <form onSubmit={handleConfirmBooking} className="row g-4">
-            <div className="col-12 col-md-6">
-              <label htmlFor="citySelect" className="form-label text-secondary fs-5 fw-medium mb-2">
-                Select a Destination:
-              </label>
-              {loadingCities ? (
-                <p className="text-muted">Loading destinations...</p>
-              ) : errorCities ? (
-                <p className="text-danger">{errorCities}</p>
-              ) : (
-                <select
-                  id="citySelect"
-                  value={selectedCityId}
-                  onChange={(e) => setSelectedCityId(e.target.value)}
-                  className="form-select form-control-lg text-dark bg-white shadow-sm"
-                  required
+          <div className="mb-5 pb-4 border-bottom border-primary border-opacity-25">
+            <h2 className="h3 fw-semibold text-secondary mb-4 text-center">
+              Book Your Next Adventure!
+            </h2>
+            <form onSubmit={handleConfirmBooking} className="row g-4">
+              <div className="col-12 col-md-6">
+                <label
+                  htmlFor="citySelect"
+                  className="form-label text-secondary fs-5 fw-medium mb-2"
                 >
-                  <option value="">Select a Destination</option>
-                  {cities.map((city) => (
-                    <option key={city._id} value={city._id}>
-                      {city.name} (Rs. {city.pricePerPerson?.toLocaleString() || 'N/A'}/day)
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
+                  Select a Destination:
+                </label>
+                {loadingCities ? (
+                  <p className="text-muted">Loading destinations...</p>
+                ) : errorCities ? (
+                  <p className="text-danger">{errorCities}</p>
+                ) : (
+                  <select
+                    id="citySelect"
+                    value={selectedCityId}
+                    onChange={(e) => setSelectedCityId(e.target.value)}
+                    className="form-select form-control-lg text-dark bg-white shadow-sm"
+                    required
+                  >
+                    <option value="">Select a Destination</option>
+                    {cities.map((city) => (
+                      <option key={city._id} value={city._id}>
+                        {city.name} (Rs.{" "}
+                        {city.pricePerPerson?.toLocaleString() || "N/A"}/day)
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
 
-            <div className="col-12 col-md-6">
-              <label htmlFor="numTravelers" className="form-label text-secondary fs-5 fw-medium mb-2">
-                Number of People:
-              </label>
-              <input
-                type="number"
-                id="numTravelers"
-                value={numTravelers}
-                onChange={(e) => setNumTravelers(Math.max(1, parseInt(e.target.value) || 1))}
-                min="1"
-                className="form-control form-control-lg text-dark shadow-sm"
-                required
-              />
-            </div>
+              <div className="col-12 col-md-6">
+                <label
+                  htmlFor="numTravelers"
+                  className="form-label text-secondary fs-5 fw-medium mb-2"
+                >
+                  Number of People:
+                </label>
+                <input
+                  type="number"
+                  id="numTravelers"
+                  value={numTravelers}
+                  onChange={(e) =>
+                    setNumTravelers(Math.max(1, parseInt(e.target.value) || 1))
+                  }
+                  min="1"
+                  className="form-control form-control-lg text-dark shadow-sm"
+                  required
+                />
+              </div>
 
-            <div className="col-12 col-md-6">
-              <label htmlFor="startDate" className="form-label text-secondary fs-5 fw-medium mb-2">
-                Preferred Start Date:
-              </label>
-              <input
-                type="date"
-                id="startDate"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="form-control form-control-lg text-dark shadow-sm"
-                required
-              />
-            </div>
+              <div className="col-12 col-md-6">
+                <label
+                  htmlFor="startDate"
+                  className="form-label text-secondary fs-5 fw-medium mb-2"
+                >
+                  Preferred Start Date:
+                </label>
+                <input
+                  type="date"
+                  id="startDate"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="form-control form-control-lg text-dark shadow-sm"
+                  required
+                />
+              </div>
 
-            <div className="col-12 col-md-6">
-              <label htmlFor="endDate" className="form-label text-secondary fs-5 fw-medium mb-2">
-                Preferred End Date:
-              </label>
-              <input
-                type="date"
-                id="endDate"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="form-control form-control-lg text-dark shadow-sm"
-                required
-              />
-            </div>
+              <div className="col-12 col-md-6">
+                <label
+                  htmlFor="endDate"
+                  className="form-label text-secondary fs-5 fw-medium mb-2"
+                >
+                  Preferred End Date:
+                </label>
+                <input
+                  type="date"
+                  id="endDate"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="form-control form-control-lg text-dark shadow-sm"
+                  required
+                />
+              </div>
 
-            <div className="col-12 d-flex justify-content-center mt-4">
-              <button
-                type="submit"
-                className="btn btn-success btn-lg fw-semibold rounded-pill shadow-sm transition-transform-hover"
-                style={{
-                  paddingLeft: '3rem',
-                  paddingRight: '3rem',
-                  paddingTop: '0.75rem',
-                  paddingBottom: '0.75rem',
-                  transition: 'transform 0.3s ease-in-out',
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-              >
-                Confirm Booking
-              </button>
-            </div>
-          </form>
-        </div>
+              <div className="col-12 d-flex justify-content-center mt-4">
+                <button
+                  type="submit"
+                  className="btn btn-success btn-lg fw-semibold rounded-pill shadow-sm transition-transform-hover"
+                  style={{
+                    paddingLeft: "3rem",
+                    paddingRight: "3rem",
+                    paddingTop: "0.75rem",
+                    paddingBottom: "0.75rem",
+                    transition: "transform 0.3s ease-in-out",
+                  }}
+                  onMouseOver={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.05)")
+                  }
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
+                >
+                  Confirm Booking
+                </button>
+              </div>
+            </form>
+          </div>
 
-        <div>
-          <h2 className="h3 fw-semibold text-secondary mb-4 text-center">Your Upcoming Trips</h2>
+          <div>
+            <h2 className="h3 fw-semibold text-secondary mb-4 text-center">
+              Your Upcoming Trips
+            </h2>
 
-          {loadingBookings ? (
-            <p className="text-muted text-center fs-5 py-5">Loading your bookings...</p>
-          ) : errorBookings ? (
-            <p className="text-danger text-center fs-5 py-5">{errorBookings}</p>
-          ) : bookings.length === 0 ? (
-            <p className="text-muted text-center fs-5 py-5">
-              Looks like you haven't booked any trips yet! Start by selecting a destination above.
-            </p>
-          ) : (
-            <div className="table-responsive rounded shadow-sm border border-light">
-              <table className="table table-hover mb-0">
-                <thead className="bg-primary bg-opacity-10">
-                  <tr>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      User
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      City
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      Date
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      People
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      Total Cost
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      Status
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase">
-                      Actions
-                    </th> {/* Added Actions column */}
-                  </tr>
-                </thead>
-                <tbody className="bg-white">
-                  {bookings.map((b) => (
-                    <tr key={b._id}>
-                      <td className="px-4 py-3 text-nowrap text-dark">{b.userId?.username || "N/A"}</td>
-                      <td className="px-4 py-3 text-nowrap text-dark">{b.cityId?.name || "N/A"}</td>
-                      <td className="px-4 py-3 text-nowrap text-muted">
-                        {b.date ? new Date(b.date).toLocaleDateString() : "N/A"}
-                      </td>
-                      <td className="px-4 py-3 text-nowrap text-muted">{b.numberOfPeople}</td>
-                      <td className="px-4 py-3 text-nowrap text-dark fw-semibold">
-                        Rs. {b.totalPrice?.toLocaleString() || "N/A"}
-                      </td>
-                      <td className="px-4 py-3 text-nowrap">
-                        <span className="badge rounded-pill bg-success-subtle text-success-emphasis py-2 px-3 fw-semibold">
-                          Confirmed
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-nowrap">
-                        {/* Delete Button */}
-                        <button
-                          className="btn btn-sm btn-danger rounded-pill d-inline-flex align-items-center justify-content-center"
-                          style={{ width: '32px', height: '32px', padding: 0 }}
-                          onClick={() => handleDeleteClick(b._id)}
-                          title="Delete Booking"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
-                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5"/>
-                          </svg>
-                        </button>
-                      </td>
+            {loadingBookings ? (
+              <p className="text-muted text-center fs-5 py-5">
+                Loading your bookings...
+              </p>
+            ) : errorBookings ? (
+              <p className="text-danger text-center fs-5 py-5">
+                {errorBookings}
+              </p>
+            ) : bookings.length === 0 ? (
+              <p className="text-muted text-center fs-5 py-5">
+                Looks like you haven't booked any trips yet! Start by selecting
+                a destination above.
+              </p>
+            ) : (
+              <div className="table-responsive rounded shadow-sm border border-light">
+                <table className="table table-hover mb-0">
+                  <thead className="bg-primary bg-opacity-10">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        User
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        City
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        People
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        Total Cost
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        Status
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3 text-start text-sm fw-medium text-secondary text-uppercase"
+                      >
+                        Actions
+                      </th>{" "}
+                      {/* Added Actions column */}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody className="bg-white">
+                    {bookings.map((b) => (
+                      <tr key={b._id}>
+                        <td className="px-4 py-3 text-nowrap text-dark">
+                          {b.userId?.username || "N/A"}
+                        </td>
+                        <td className="px-4 py-3 text-nowrap text-dark">
+                          {b.cityId?.name || "N/A"}
+                        </td>
+                        <td className="px-4 py-3 text-nowrap text-muted">
+                          {b.date
+                            ? new Date(b.date).toLocaleDateString()
+                            : "N/A"}
+                        </td>
+                        <td className="px-4 py-3 text-nowrap text-muted">
+                          {b.numberOfPeople}
+                        </td>
+                        <td className="px-4 py-3 text-nowrap text-dark fw-semibold">
+                          Rs. {b.totalPrice?.toLocaleString() || "N/A"}
+                        </td>
+                        <td className="px-4 py-3 text-nowrap">
+                          <span className="badge rounded-pill bg-success-subtle text-success-emphasis py-2 px-3 fw-semibold">
+                            Confirmed
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-nowrap">
+                          {/* Delete Button */}
+                          <button
+                            className="btn btn-sm btn-danger rounded-pill d-inline-flex align-items-center justify-content-center"
+                            style={{
+                              width: "32px",
+                              height: "32px",
+                              padding: 0,
+                            }}
+                            onClick={() => handleDeleteClick(b._id)}
+                            title="Delete Booking"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className="bi bi-trash-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <BottomNav />
+    </>
   );
 }
 

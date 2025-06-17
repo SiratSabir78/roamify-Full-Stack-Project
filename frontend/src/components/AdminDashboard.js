@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import UserTypePieChart from "./AnalyticsChart"; // Existing pie chart component
-import BookingManagement from "./BookingManagement";
 import CityManagement from "./CityManager";
 import Logout from "./Logout";
 import MonthlyCityBookingChart from "./MonthlyCityBookingChart"; // <-- import your new chart component
