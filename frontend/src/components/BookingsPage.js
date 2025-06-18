@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"; // axios is used for making HTTP requests
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // axios is used for making HTTP requests
 import Navbar from "./Navbar";
 import BottomNav from "./BottomNav";
 // --- API functions (These should ideally be in your 'frontend/api.js' file) ---
 // Base URL for your backend API. Make sure this matches your backend server's address.
-const API_BASE_URL = "http://localhost:5000/api"; // Consistently using /api prefix
+const API_BASE_URL = 'http://localhost:5000/api'; // Consistently using /api prefix
 
 // Function to fetch all bookings from your backend's /api/bookings endpoint
 const fetchBookings = async () => {
@@ -14,11 +14,7 @@ const fetchBookings = async () => {
   } catch (error) {
     console.error("Error fetching bookings:", error);
     // Removed fallback to mock data. Now it will genuinely error if the API fails.
-    throw new Error(
-      `Failed to fetch bookings: ${
-        error.message || error.response?.data?.message
-      }`
-    );
+    throw new Error(`Failed to fetch bookings: ${error.message || error.response?.data?.message}`);
   }
 };
 
@@ -29,10 +25,7 @@ const createBooking = async (bookingData) => {
     return response;
   } catch (error) {
     console.error("Error creating booking:", error);
-    const errorMessage =
-      error.response?.data?.message ||
-      error.message ||
-      "Unknown error occurred.";
+    const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred.';
     throw new Error(`Failed to create booking: ${errorMessage}`);
   }
 };
@@ -44,10 +37,7 @@ const deleteBooking = async (id) => {
     return response;
   } catch (error) {
     console.error(`Error deleting booking with ID ${id}:`, error);
-    const errorMessage =
-      error.response?.data?.message ||
-      error.message ||
-      "Unknown error occurred.";
+    const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred.';
     throw new Error(`Failed to delete booking: ${errorMessage}`);
   }
 };
@@ -60,21 +50,17 @@ const fetchCities = async () => {
   } catch (error) {
     console.error("Error fetching cities:", error);
     // Removed fallback to mock data. Now it will genuinely error if the API fails.
-    throw new Error(
-      `Failed to fetch destinations: ${
-        error.message || error.response?.data?.message
-      }`
-    );
+    throw new Error(`Failed to fetch destinations: ${error.message || error.response?.data?.message}`);
   }
 };
 
 // Main BookingsPage React Component
 export default function BookingsPage({ loggedInUserId }) {
   // State variables for the new booking form inputs
-  const [selectedCityId, setSelectedCityId] = useState("");
+  const [selectedCityId, setSelectedCityId] = useState('');
   const [numTravelers, setNumTravelers] = useState(1);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   // State variables for managing the display of existing bookings
   const [bookings, setBookings] = useState([]);
@@ -87,38 +73,30 @@ export default function BookingsPage({ loggedInUserId }) {
   const [errorCities, setErrorCities] = useState(null);
 
   // State for a custom alert/confirmation modal (replaces alert())
-  const [messageBox, setMessageBox] = useState({
-    show: false,
-    type: "info",
-    message: "",
-  });
-  const [confirmDelete, setConfirmDelete] = useState({
-    show: false,
-    bookingId: null,
-  });
+  const [messageBox, setMessageBox] = useState({ show: false, type: 'info', message: '' });
+  const [confirmDelete, setConfirmDelete] = useState({ show: false, bookingId: null });
+
 
   // Determine the userId to use for bookings
   // This should ideally come from a proper authentication context.
   // For now, it defaults to the seeded 'testUserBooking' ID if not provided as a prop.
-  const currentUserId = loggedInUserId || "685049f6f67f2d4776742054"; // Fallback to a valid seeded ID
+  const currentUserId = loggedInUserId || '685049f6f67f2d4776742054'; // Fallback to a valid seeded ID
 
   // Function to show a custom message box
-  const showMessageBox = (message, type = "info") => {
+  const showMessageBox = (message, type = 'info') => {
     setMessageBox({ show: true, type, message });
   };
 
   // Function to hide the custom message box
   const hideMessageBox = () => {
-    setMessageBox({ show: false, type: "info", message: "" });
+    setMessageBox({ show: false, type: 'info', message: '' });
   };
 
   // Load initial data (cities and bookings) when the component mounts
   useEffect(() => {
     // Warn if no actual logged-in user ID is provided (only during development)
     if (!loggedInUserId) {
-      console.warn(
-        "BookingsPage: No loggedInUserId prop provided. Using a default ID for testing. Integrate with an actual authentication system for dynamic user IDs."
-      );
+      console.warn("BookingsPage: No loggedInUserId prop provided. Using a default ID for testing. Integrate with an actual authentication system for dynamic user IDs.");
     }
 
     async function loadInitialData() {
@@ -139,15 +117,10 @@ export default function BookingsPage({ loggedInUserId }) {
         setLoadingBookings(true);
         const response = await fetchBookings();
         // Ensure response.data is an array. If backend sends an object with a 'bookings' key, use that.
-        const bookingArray = Array.isArray(response.data)
-          ? response.data
-          : response.data.bookings || [];
+        const bookingArray = Array.isArray(response.data) ? response.data : response.data.bookings || [];
         setBookings(bookingArray);
       } catch (err) {
-        console.error(
-          "Error fetching bookings (component level handling):",
-          err
-        );
+        console.error("Error fetching bookings (component level handling):", err);
         setErrorBookings(err.message); // Display specific error message
       } finally {
         setLoadingBookings(false);
@@ -161,26 +134,14 @@ export default function BookingsPage({ loggedInUserId }) {
     e.preventDefault();
 
     // Basic client-side validation
-    if (
-      !selectedCityId ||
-      !startDate ||
-      !endDate ||
-      numTravelers < 1 ||
-      !currentUserId
-    ) {
-      showMessageBox(
-        "Please fill in all required fields (Destination, Dates, People) and ensure a user is logged in.",
-        "warning"
-      );
+    if (!selectedCityId || !startDate || !endDate || numTravelers < 1 || !currentUserId) {
+      showMessageBox('Please fill in all required fields (Destination, Dates, People) and ensure a user is logged in.', 'warning');
       return;
     }
 
-    const selectedCity = cities.find((city) => city._id === selectedCityId);
+    const selectedCity = cities.find(city => city._id === selectedCityId);
     if (!selectedCity) {
-      showMessageBox(
-        "Selected destination not found. Please choose a valid destination from the list.",
-        "warning"
-      );
+      showMessageBox('Selected destination not found. Please choose a valid destination from the list.', 'warning');
       return;
     }
 
@@ -189,7 +150,7 @@ export default function BookingsPage({ loggedInUserId }) {
 
     // Date validation: End date must be on or after start date
     if (end < start) {
-      showMessageBox("End date cannot be before start date.", "warning");
+      showMessageBox('End date cannot be before start date.', 'warning');
       return;
     }
 
@@ -197,8 +158,7 @@ export default function BookingsPage({ loggedInUserId }) {
     const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
     const daysToCharge = diffDays > 0 ? diffDays : 1; // Minimum 1 day charge
 
-    const calculatedTotalPrice =
-      (selectedCity.pricePerPerson || 10000) * numTravelers * daysToCharge;
+    const calculatedTotalPrice = (selectedCity.pricePerPerson || 10000) * numTravelers * daysToCharge;
 
     const bookingData = {
       userId: currentUserId,
@@ -210,23 +170,17 @@ export default function BookingsPage({ loggedInUserId }) {
 
     try {
       const response = await createBooking(bookingData);
-      console.log("New booking created successfully:", response.data);
+      console.log('New booking created successfully:', response.data);
       setBookings((prevBookings) => [...prevBookings, response.data]); // Add new booking to the list
       // Clear form inputs
-      setSelectedCityId("");
+      setSelectedCityId('');
       setNumTravelers(1);
-      setStartDate("");
-      setEndDate("");
-      showMessageBox(
-        "Your booking has been successfully confirmed and saved!",
-        "success"
-      );
+      setStartDate('');
+      setEndDate('');
+      showMessageBox('Your booking has been successfully confirmed and saved!', 'success');
     } catch (submitError) {
-      console.error("Error submitting new booking:", submitError);
-      showMessageBox(
-        `Error: ${submitError.message}. Please try again.`,
-        "danger"
-      );
+      console.error('Error submitting new booking:', submitError);
+      showMessageBox(`Error: ${submitError.message}. Please try again.`, 'danger');
     }
   };
 
@@ -243,16 +197,11 @@ export default function BookingsPage({ loggedInUserId }) {
     try {
       await deleteBooking(bookingId);
       // Remove the deleted booking from the state
-      setBookings((prevBookings) =>
-        prevBookings.filter((b) => b._id !== bookingId)
-      );
-      showMessageBox("Booking successfully deleted!", "success");
+      setBookings((prevBookings) => prevBookings.filter((b) => b._id !== bookingId));
+      showMessageBox('Booking successfully deleted!', 'success');
     } catch (deleteError) {
-      console.error("Error during booking deletion:", deleteError);
-      showMessageBox(
-        `Error: ${deleteError.message}. Please try again.`,
-        "danger"
-      );
+      console.error('Error during booking deletion:', deleteError);
+      showMessageBox(`Error: ${deleteError.message}. Please try again.`, 'danger');
     } finally {
       setConfirmDelete({ show: false, bookingId: null }); // Close confirmation modal
     }
@@ -262,6 +211,7 @@ export default function BookingsPage({ loggedInUserId }) {
   const handleCancelDelete = () => {
     setConfirmDelete({ show: false, bookingId: null });
   };
+
 
   return (
     <>
@@ -396,6 +346,40 @@ export default function BookingsPage({ loggedInUserId }) {
                     setNumTravelers(Math.max(1, parseInt(e.target.value) || 1))
                   }
                   min="1"
+                  className="form-control form-control-lg text-dark shadow-sm"
+                  required
+                />
+              </div>
+
+              <div className="col-12 col-md-6">
+                <label
+                  htmlFor="startDate"
+                  className="form-label text-secondary fs-5 fw-medium mb-2"
+                >
+                  Preferred Start Date:
+                </label>
+                <input
+                  type="date"
+                  id="startDate"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="form-control form-control-lg text-dark shadow-sm"
+                  required
+                />
+              </div>
+
+              <div className="col-12 col-md-6">
+                <label
+                  htmlFor="endDate"
+                  className="form-label text-secondary fs-5 fw-medium mb-2"
+                >
+                  Preferred End Date:
+                </label>
+                <input
+                  type="date"
+                  id="endDate"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
                   className="form-control form-control-lg text-dark shadow-sm"
                   required
                 />
@@ -555,3 +539,4 @@ export default function BookingsPage({ loggedInUserId }) {
     </>
   );
 }
+
