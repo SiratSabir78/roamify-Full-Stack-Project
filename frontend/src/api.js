@@ -48,10 +48,9 @@ export const addReview = (cityId, reviewData) => {
 };
 
 export const deleteReview = (cityId, reviewId, userId) => {
-  return axios.delete(`${BASE_URL}/api/cities/${cityId}/reviews/${reviewId}`, {
-    data: { userId },
-  });
+  return axios.delete(`${BASE_URL}/api/cities/${cityId}/reviews/${reviewId}/${userId}`);
 };
+
 
 // USER STATS
 export const fetchUserStats = async () => {

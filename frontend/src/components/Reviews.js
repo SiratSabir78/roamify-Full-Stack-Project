@@ -40,17 +40,14 @@ const Reviews = () => {
   const handleDeleteReview = async (cityId, reviewId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/cities/${cityId}/reviews/${reviewId}`,
-        {
-          data: { userId: user._id },
-        }
+        `http://localhost:5000/api/cities/${cityId}/reviews/${reviewId}/${user._id}`
       );
 
       setUserReviewsByCity((prev) =>
         prev
           .map((city) => ({
             ...city,
-            reviews: city.reviews.filter((r) => r._id !== reviewId),
+            reviews: city.reviews.filter((r) => r.id !== reviewId),
           }))
           .filter((city) => city.reviews.length > 0)
       );
@@ -71,7 +68,7 @@ const Reviews = () => {
             <div key={city.cityId} className="mb-4">
               <h3>{city.cityName}</h3>
               {city.reviews.map((review) => (
-                <div key={review._id} className="review-card border p-3 mb-2">
+                <div key={review.id} className="review-card border p-3 mb-2">
                   <p>
                     <strong>Review:</strong> {review.text}
                   </p>
@@ -81,7 +78,7 @@ const Reviews = () => {
                   </p>
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => handleDeleteReview(city.cityId, review._id)}
+                    onClick={() => handleDeleteReview(city.cityId, review.id)}
                   >
                     Delete
                   </button>
