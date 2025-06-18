@@ -4,7 +4,7 @@ import { getWeatherForCity } from "../Weather";
 import "./CSS/Homepage.css";
 import Navbar from "./Navbar";
 import BottomNav from "./BottomNav";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Homepage() {
   const [cities, setCities] = useState([]);
@@ -13,7 +13,7 @@ function Homepage() {
   const [favorites, setFavorites] = useState([]);
   const [userId, setUserId] = useState(null);
 
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
