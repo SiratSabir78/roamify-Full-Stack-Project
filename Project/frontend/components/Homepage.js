@@ -94,7 +94,6 @@ function Homepage() {
   return (
     <>
       <Navbar />
-       <div className="page-content">
       <div className="container py-4">
         <div className="text-center mb-4">
           <button
@@ -168,11 +167,9 @@ function Homepage() {
             </div>
           ))}
         </div>
-          
-        
+
+        <BottomNav />
       </div>
-      </div>
-      <BottomNav />
     </>
   );
 }

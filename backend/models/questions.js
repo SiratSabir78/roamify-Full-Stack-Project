@@ -4,7 +4,7 @@ const Question = require("./Question");
 mongoose
   .connect(
     "mongodb+srv://roamifyDatabase:FnNXqgz5f3ifQ9KJ@roamify.ljiltmx.mongodb.net/?retryWrites=true&w=majority&appName=roamify"
-  ) // 🔁 Replace with your actual DB name
+  )
   .then(() => {
     console.log("MongoDB connected");
     return seedData();

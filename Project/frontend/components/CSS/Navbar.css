@@ -1,0 +1,26 @@
+.container-fluid {
+  background: linear-gradient(to right, #ebb5f8, #3b88ae);
+  font-family: Garamond, serif;
+}
+.nav-link {
+  color: #8812a5 !important;
+}
+.nav-link:hover {
+  color: black;
+}
+.navbar-brand {
+  color: #a844c1 !important;
+}
+
+.navbar {
+  align-items: center;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+}
+.navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 10px;
+}
