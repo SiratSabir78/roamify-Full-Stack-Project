@@ -41,7 +41,18 @@ function Login() {
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Log In</h2>
-
+        <div className="container d-flex flex-column align-items-center">
+          <p>Log in your account here</p>
+          <Link to="/" className="navbar-brand">
+            <img
+              src="/Roamify.png"
+              alt="Roamify Logo"
+              width="80"
+              height="80"
+              className="d-inline-block align-text-top"
+            />
+          </Link>
+        </div>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -78,7 +89,9 @@ function Login() {
 
         <div className="signup-redirect">
           <span>Don't have an account? </span>
-          <Link to="/SignUp" className="signup-link">Sign Up</Link>
+          <Link to="/SignUp" className="signup-link">
+            Sign Up
+          </Link>
         </div>
       </form>
     </div>

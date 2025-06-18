@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { adminLogin } from "../api";
 import "../components/CSS/AdminLogin.css";
 
@@ -33,6 +33,18 @@ export default function AdminLogin() {
   return (
     <div className="admin-login-container">
       <h2>Admin Login</h2>
+      <div className="container d-flex flex-column align-items-center">
+        <p>Log In your admin account here.</p>
+        <Link to="/" className="navbar-brand">
+          <img
+            src="/Roamify.png"
+            alt="Roamify Logo"
+            width="80"
+            height="80"
+            className="d-inline-block align-text-top"
+          />
+        </Link>
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           type="email"

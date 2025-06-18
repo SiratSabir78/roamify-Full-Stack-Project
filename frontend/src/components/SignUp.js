@@ -97,17 +97,19 @@ function SignUp() {
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="signup-form">
         <h2>Sign Up</h2>
-        <p>Create Your Account on Roamify</p>
 
-        <Link to="/" className="navbar-brand">
-          <img
-            src="/Roamify.png"
-            alt="Roamify Logo"
-            width="80"
-            height="80"
-            className="d-inline-block align-text-top"
-          />
-        </Link>
+        <div className="container d-flex flex-column align-items-center">
+          <p>Create Your Account on Roamify</p>
+          <Link to="/" className="navbar-brand">
+            <img
+              src="/Roamify.png"
+              alt="Roamify Logo"
+              width="80"
+              height="80"
+              className="d-inline-block align-text-top"
+            />
+          </Link>
+        </div>
 
         {["username", "email", "phone", "password"].map((field) => (
           <div key={field} className="form-group">
