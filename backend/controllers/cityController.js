@@ -118,8 +118,7 @@ const addCityReview = async (req, res) => {
 
 const deleteCityReview = async (req, res) => {
   try {
-    const { reviewId } = req.params;
-    const { userId } = req.body;
+    const { reviewId, userId } = req.params;  // get userId from params
 
     const city = await City.findById(req.params.id);
     const user = await User.findById(userId);
@@ -137,6 +136,7 @@ const deleteCityReview = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 module.exports = {
   getAllCities,

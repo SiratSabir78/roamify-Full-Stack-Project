@@ -16,6 +16,6 @@ router.post("/", createCity);
 router.put("/:id", updateCity);
 router.delete("/:id", deleteCity);
 router.post("/:id/reviews", addCityReview);
-router.delete("/:id/reviews/:reviewId", deleteCityReview);
+router.delete("/:id/reviews/:reviewId/:userId", deleteCityReview);
 
 module.exports = router;
