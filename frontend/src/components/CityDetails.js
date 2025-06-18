@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { addReview, deleteReview } from "../api";
 import axios from "axios";
+import Navbar from "./Navbar";
+import BottomNav from "./BottomNav";
 
 function CityDetails() {
   const { id } = useParams();
@@ -10,18 +12,17 @@ function CityDetails() {
   const [rating, setRating] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
 
- useEffect(() => {
-  const fetchCity = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/api/cities/${id}`);
-      setCity(res.data);
-    } catch (err) {
-      console.error("Failed to fetch city details:", err);
-    }
-  };
-  fetchCity();
-}, [id]);
-
+  useEffect(() => {
+    const fetchCity = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/cities/${id}`);
+        setCity(res.data);
+      } catch (err) {
+        console.error("Failed to fetch city details:", err);
+      }
+    };
+    fetchCity();
+  }, [id]);
 
   const handleAddReview = async () => {
     if (!reviewText.trim() || rating === 0) {
@@ -56,9 +57,15 @@ function CityDetails() {
   if (!city) return <div>Loading...</div>;
 
   return (
+    <>
+    <Navbar />
     <div className="container mt-4">
       <h2>{city.name}</h2>
-      <img src={`/${city.name}.jpg`} alt={city.name} className="img-fluid" />
+      <img
+        src={`/${city.name}.jpg`}
+        alt={city.name}
+        className="img-fluid"
+      />
       <p>{city.description}</p>
 
       <div className="my-3">
@@ -74,7 +81,6 @@ function CityDetails() {
             <span
               key={star}
               style={{
-                cursor: "pointer",
                 color: star <= rating ? "#ffd700" : "#ccc",
                 fontSize: "24px",
               }}
@@ -94,7 +100,7 @@ function CityDetails() {
         {city.reviews.map((review) => (
           <li
             key={review.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
+            className="list-group-item"
           >
             <div>
               <strong>{review.username}</strong>: {review.text}
@@ -114,6 +120,8 @@ function CityDetails() {
         ))}
       </ul>
     </div>
+    <BottomNav />
+    </>
   );
 }
 

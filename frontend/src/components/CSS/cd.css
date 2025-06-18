@@ -1,0 +1,131 @@
+/* Background and font */
+body {
+  background: linear-gradient(to right, #eeccfd, #a6dbf3);
+  font-family: Garamond, serif;
+}
+
+/* Main container */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffffee;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* City name */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #5d3b76;
+  font-size: 32px;
+}
+
+/* City image */
+img.img-fluid {
+  display: block;
+  max-width: 100%;
+  max-height: 400px;
+  height: auto;
+  border-radius: 12px;
+  margin: 0 auto 20px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Description text */
+p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Review textarea */
+textarea.form-control {
+  min-height: 120px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  padding: 12px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Rating stars */
+label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #333;
+}
+
+span {
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+span:hover {
+  color: #ffb700 !important;
+}
+
+/* Submit Review button */
+button.btn-primary {
+  background-color: #a6dbf3;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button.btn-primary:hover {
+  background-color: #7dc3e8;
+  color: black;
+  transform: translateY(-2px);
+}
+
+/* Reviews list */
+h4 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: #5d3b76;
+  font-size: 24px;
+}
+
+ul.list-group {
+  padding-left: 0;
+}
+
+.list-group-item {
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Review user and text */
+.list-group-item strong {
+  color: #5d3b76;
+  font-size: 18px;
+}
+
+/* Delete button */
+button.btn-danger {
+  background-color: #b087cb;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button.btn-danger:hover {
+  background-color: #9c6db3;
+  transform: translateY(-2px);
+}

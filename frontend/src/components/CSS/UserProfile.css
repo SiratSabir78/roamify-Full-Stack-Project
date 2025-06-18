@@ -1,10 +1,23 @@
+/* BODY BASE */
+body {
+  background: linear-gradient(to right, #eeccfd, #a6dbf3);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Garamond, serif;
+  box-sizing: border-box;
+}
+
+/* PROFILE CONTAINER */
 .profile-container {
   max-width: 400px;
   margin: 30px auto;
   padding: 15px;
+  padding-bottom: 80px; /* Add padding at bottom so content doesn't hide under BottomNav */
   border: 1px solid #ddd;
   border-radius: 6px;
   background: #fafafa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .profile-info > div {
@@ -12,6 +25,7 @@
   padding: 2%;
 }
 
+/* FORM FIELDS */
 .profile-form .form-group {
   margin-bottom: 15px;
 }
@@ -28,6 +42,7 @@
   padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .error {
@@ -63,6 +78,7 @@
   gap: 10px;
 }
 
+/* BUTTONS */
 .submit-button {
   background-color: #007bff;
   color: white;
