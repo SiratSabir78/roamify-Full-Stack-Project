@@ -1,8 +1,8 @@
-// routes/signup.js
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User"); // Make sure this is correct
+const User = require("../models/User"); // Make sure the path is correct
 
+// POST /api/auth/signup
 router.post("/signup", async (req, res) => {
   try {
     const { username, email, phone, address, gender, password } = req.body;
@@ -10,9 +10,10 @@ router.post("/signup", async (req, res) => {
     // Check if email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(409).json({ message: "Email already exists" });
     }
 
+    // Create and save new user
     const newUser = new User({
       username,
       email,
@@ -30,7 +31,7 @@ router.post("/signup", async (req, res) => {
     });
   } catch (err) {
     console.error("Signup error:", err);
-    res.status(500).json({ message: "Server error during signup" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

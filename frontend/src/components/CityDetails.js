@@ -60,9 +60,19 @@ function CityDetails() {
     <>
       <Navbar />
       <div className="container mt-4">
-        <h2>{city.name}</h2>
+        <h2>
+          <strong>Name: </strong>
+          {city.name}
+        </h2>
         <img src={`/${city.name}.jpg`} alt={city.name} className="img-fluid" />
-        <p>{city.description}</p>
+        <p>
+          <strong>Description: </strong>
+          {city.description}
+        </p>
+        <p>
+          <strong>Trip Dates: </strong>
+          {city.tripDates}
+        </p>
 
         <div className="my-3">
           <textarea

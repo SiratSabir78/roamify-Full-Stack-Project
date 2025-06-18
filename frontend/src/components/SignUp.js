@@ -78,6 +78,12 @@ function SignUp() {
         const data = await res.json();
         setLoading(false);
 
+        if (res.status === 409) {
+          // Email already exists
+          setErrors((prev) => ({ ...prev, email: data.message }));
+          return;
+        }
+
         if (res.ok && data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
           alert("Signup successful!");

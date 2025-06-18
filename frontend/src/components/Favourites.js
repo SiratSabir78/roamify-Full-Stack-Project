@@ -88,7 +88,7 @@ function Favourites() {
       <div className="container py-4">
         <h2 className="mb-4 text-center">❤️ Your Saved Destinations</h2>
 
-        {/* FAVORITE CITIES */}
+      
         <div className="row mb-5">
           <div className="col-12">
             <h4 className="mb-3">📍 Your Favorite Cities</h4>
